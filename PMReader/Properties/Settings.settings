@@ -1,0 +1,27 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PMReader.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="PM_Path_Local" Type="System.String" Scope="User">
+      <Value Profile="(Default)">pm</Value>
+    </Setting>
+    <Setting Name="PM_Path_Server100" Type="System.String" Scope="User">
+      <Value Profile="(Default)">usr/Systems/1353NM_1_7.0_Master/export/pm/emlDom_100</Value>
+    </Setting>
+    <Setting Name="ftp_Pass" Type="System.String" Scope="User">
+      <Value Profile="(Default)">install1</Value>
+    </Setting>
+    <Setting Name="ftp_User" Type="System.String" Scope="User">
+      <Value Profile="(Default)">root</Value>
+    </Setting>
+    <Setting Name="ftp_Address" Type="System.String" Scope="User">
+      <Value Profile="(Default)">172.23.31.38</Value>
+    </Setting>
+    <Setting Name="ftp_Port" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">21</Value>
+    </Setting>
+    <Setting Name="PM_Path_Server101" Type="System.String" Scope="User">
+      <Value Profile="(Default)">usr/Systems/1353NM_1_7.0_Master/export/pm/emlDom_101</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
