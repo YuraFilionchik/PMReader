@@ -33,14 +33,19 @@ namespace PMReader
                 this.Filename = Filename;
                 StreamReader f;
                 string Line;
-                NE.Port newPort=new NE.Port(1);
+				NE.Port newPort=new NE.Port(1);
                 NE.Statistics newStat=new NE.Statistics(1);
                 Ports=new List<NE.Port>();
                 string filepath = FileDir + "/" + Filename;
                 string PortName;
-               
+             
                 if (File.Exists(filepath))
                 {
+                	var tFile=File.ReadAllText(filepath);
+                	if(tFile.Contains("15 minutes")) //read pm15 file
+                	   {
+						return;
+                	   }
                     f = new StreamReader(filepath);
                     Line = f.ReadLine();
                     var ListLine = Line.Split(':');
@@ -48,6 +53,7 @@ namespace PMReader
                     Line = f.ReadLine();
                     ListLine = Line.Split();
                     Date = DateTime.ParseExact(ListLine[2].TrimStart('"').TrimEnd('"'), "dd:MM:yyyy",CultureInfo.InvariantCulture);
+                    
                     while (!f.EndOfStream) //повторять до конца файла
                     {
                         

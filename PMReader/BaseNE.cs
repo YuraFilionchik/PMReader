@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace PMReader
 {
@@ -16,6 +17,15 @@ namespace PMReader
         public void AddNewNE(NE ne)
         {
             NeList.Add(ne);
+        }
+        
+        public List<NE> GetPM24()
+        {
+        	return NeList.Where(x => x.ISPM15 == false).ToList();
+        }
+                public List<NE> GetPM15()
+        {
+                	return NeList.Where(x => x.ISPM15).ToList();
         }
     }
 }
