@@ -80,18 +80,16 @@ namespace PMReader
            
            
         }
-
+        //TODO1 thread for Display
+        //TODO COLOR and error counter for items in listbox1
+        //TODO3 context menu READ stat for selected NE in listbox1
         //SELECT PORT
         private void ComboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
             var c = (ComboBox)sender;
             DrawPortToChart(BASE.GetPM24().First(x=>x.NE_Name==listBox1.SelectedItem.ToString()).
                 Ports.First(p=>p.PortName==c.SelectedItem.ToString()),true,true);
-            if (chart1.Series.Count != 0 && !String.IsNullOrWhiteSpace(comboBox1.SelectedItem.ToString()))
-                for (int i = 0; i < chart1.Series.Count; i++)
-                {
-                    chart1.Series[i].ChartType = (SeriesChartType)Enum.Parse(typeof(SeriesChartType), comboBox1.SelectedItem.ToString());
-                }
+          
         }
         //SELECT PORT
         private void ComboBox4_SelectedIndexChanged(object sender, EventArgs e)
@@ -99,11 +97,6 @@ namespace PMReader
             var c = (ComboBox)sender;
             DrawPortToChart(BASE.GetPM15().First(x => x.NE_Name == listBox1.SelectedItem.ToString()).
                 Ports.First(p => p.PortName == c.SelectedItem.ToString()), true, true);
-            if (chart2.Series.Count != 0 && !String.IsNullOrWhiteSpace(comboBox2.SelectedItem.ToString()))
-                for (int i = 0; i < chart2.Series.Count; i++)
-                {
-                    chart2.Series[i].ChartType = (SeriesChartType)Enum.Parse(typeof(SeriesChartType), comboBox2.SelectedItem.ToString());
-                }
         }
 
         /// <summary>
@@ -203,7 +196,7 @@ namespace PMReader
 
         #endregion
         
-
+        //TODO1 read only new files from server
         //read from server
         private void button1_Click(object sender, EventArgs e)
         {
@@ -778,7 +771,7 @@ string fname="";
 
                     //s1.LegendText = port.PortName;
                     chart.Series.Add(s1);
-              
+                chart.ChartAreas[0].RecalculateAxesScale();
             }
 
             catch (Exception ex)
@@ -786,7 +779,7 @@ string fname="";
                 MessageBox.Show(ex.Message, "DrawPortToChart Method");
             }
         }
-        //TODO display pm15
+        //TODO1 display pm15 in datagrid
         private void Display(bool all)
         {        	
           
