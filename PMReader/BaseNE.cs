@@ -30,7 +30,11 @@ namespace PMReader
         {
                 	return NeList.Where(x => x.ISPM15).ToList();
         }
-        //add info for pm24
+        /// <summary>
+        /// Add New NE or New info in Existing Ne
+        /// </summary>
+        /// <param name="pm"></param>
+        /// <returns>true if NE exist</returns>
         public bool AddNE(ReadPM pm)
         {int index= this.NeList.FindIndex(x => x.NE_Name == pm.NE_Name && x.ISPM15 ==false);
             if (index != -1)//Exist NE

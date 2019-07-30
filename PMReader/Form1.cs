@@ -30,12 +30,14 @@ namespace PMReader
         private int nFiles;//количество обработанных файлов
             int indexOfFile=0; //номер файл
         private int count;
+        private int c_pm24;//count of pm24 files
+        private int c_pm15;//count of pm15 files
         DateTime FromDate, ToDate;
         DateTime dateNow = DateTime.Now.Date;
         private string DirLocal = Properties.Settings.Default.PM_Path_Local;
         private ParameterizedThreadStart readFtpThread1;
         private ParameterizedThreadStart readFtpThread2;
-        BaseNE BASE=new BaseNE();
+        BaseNE BASE=new BaseNE(); //база элементов NE
         const string pm24Dir="pm24Dir";
         const string pm15Dir="pm15Dir";
         const string dom100 = "emlDom_100";
@@ -61,6 +63,8 @@ namespace PMReader
                 comboBox1.Items.AddRange(Enum.GetNames(typeof(SeriesChartType)));
             comboBox2.Items.AddRange(Enum.GetNames(typeof(SeriesChartType)));
             count = 0;
+            c_pm15=0;
+            c_pm24=0;
             dateTimePicker1.Value = dateNow;
             dateTimePicker2.Value = dateNow;
             FromDate = dateTimePicker1.Value;
@@ -73,7 +77,7 @@ namespace PMReader
             comboBox3.SelectedIndexChanged += ComboBox3_SelectedIndexChanged;
             comboBox4.SelectedIndexChanged += ComboBox4_SelectedIndexChanged;
             tabControl1.SelectedIndexChanged+= tabIndexchanged;
-            BASE.AddingNE+= AddItemToListbox;
+            BASE.AddingNE+= AddItemToListbox;//подписка на событие добавления нового элемента в БД
                     
                     }
             catch (Exception)
@@ -218,7 +222,6 @@ namespace PMReader
 
         #endregion
         
-        //TODO1 read only new files from server
         //read from server
         private void button1_Click(object sender, EventArgs e)
         {
@@ -230,7 +233,9 @@ if (dateTimePicker1.Value.Date <= dateTimePicker2.Value.Date)
     nDirs = 0;  
     nDirsAll = 0;
     indexOfFile=0;
-                count = 0;
+    count = 0;
+	c_pm15=0;
+	c_pm24=0;
                 BASE=new BaseNE(); //Base of NE
                     BASE.AddingNE += AddItemToListbox;
 
@@ -277,9 +282,10 @@ if (dateTimePicker1.Value.Date <= dateTimePicker2.Value.Date)
             {
                 //структура локальных папок
                 //dom100/date/Dir24pm/file
-               
-                // string oldBut = button2.Text;
-                //Invoke(new Action<string>(s => button2.Text = s), "Идет процесс анализа локальных файлов...");
+               c_pm24=0;
+               c_pm15=0;
+                string oldBut = button2.Text;
+                Invoke(new Action<string>(s => button2.Text = s), "Идет процесс анализа локальных файлов...");
                 Invoke(new Action<bool>(s => button2.Enabled = s), false);
                     Invoke(new Action<bool>(s => button1.Enabled = s), false);
                     string PM_path_Local = (string)O;
@@ -289,7 +295,10 @@ if (dateTimePicker1.Value.Date <= dateTimePicker2.Value.Date)
                 ReadLocalDOM(dom101_path);
                 Invoke(new Action<bool>(s => button2.Enabled = s), true);
                 Invoke(new Action<bool>(s => button1.Enabled = s), true);
-              
+                Invoke(new Action<string>(s => button2.Text = s), oldBut);
+             string text = "Прочитано файлов pm24= "+c_pm24.ToString()+" и pm15= "+c_pm15+
+                            	". Всего ="+(c_pm24+c_pm15).ToString();
+                            Invoke(new Action<string>(s => label4.Text = s), text);
                 
             }
             catch (Exception ex)
@@ -302,11 +311,11 @@ if (dateTimePicker1.Value.Date <= dateTimePicker2.Value.Date)
         }
         public void ReadAndCopyFiles(object O)
         {
-
+string oldBut = button1.Text;
             try
             {
                 mutexObj.WaitOne();//wait until read dom100
-                string oldBut = button1.Text;
+                
                 Invoke(new Action<string>(s => button1.Text = s), "Идет процесс анализа...");
                 Invoke(new Action<bool>(s => button1.Enabled = s), false);
                 Invoke(new Action<bool>(s => button2.Enabled = s), false);
@@ -442,7 +451,7 @@ if (dateTimePicker1.Value.Date <= dateTimePicker2.Value.Date)
                                 client.GetFile(TimeoutFTP, DestDir24 + file.Name, file.Name);
                                 pm24 = new ReadPM(DestDir24, file.Name);//считали и проанализировали локальный файл
                                 BASE.AddNE(pm24);//add to base
-
+								c_pm24++;
                             }
                             client.ChangeDirectoryUp(TimeoutFTP);//in dirdate
                         }
@@ -469,14 +478,15 @@ if (dateTimePicker1.Value.Date <= dateTimePicker2.Value.Date)
                                     client.GetFile(TimeoutFTP, DestDir15 + file.Name, file.Name);
                                     var pm15 = new PM15(DestDir15 + file.Name);//считали и проанализировали локальный файл
                                     BASE.AddNE(pm15);//add to base
-
+									c_pm15++;
                                 }
                                 client.ChangeDirectoryUp(TimeoutFTP);//in dirdate
 
                             
                            // client.ChangeDirectoryUp(TimeoutFTP);//in dom100
-                            text = "Найдено " + nDirsAll + " папок; Отфильтровано по дате " + nDirs +
-                                          "; Обработано файлов: " + nFiles;
+                            text = "Обработано файлов: " + nFiles+
+                            	"; Скопировано с сервера="+c_pm24.ToString()+"pm24 и ="+c_pm15+
+                            	"pm15. Всего ="+(c_pm24+c_pm15).ToString();
                             Invoke(new Action<string>(s => label4.Text = s), text);
 
                         }//if (pm15dir exist)
@@ -496,6 +506,10 @@ if (dateTimePicker1.Value.Date <= dateTimePicker2.Value.Date)
             {
                 if (ex.Message != "Поток находился в процессе прерывания.")
                     MessageBox.Show(ex.ToString(), ex.Message);
+                 Invoke(new Action<string>(s => button1.Text = s), oldBut);
+                    Invoke(new Action<bool>(s => button1.Enabled = s), true);
+                    Invoke(new Action<bool>(s => button2.Enabled = s), true);
+                    Invoke(new Action<bool>(s => listBox1.Enabled = s), true);
                 mutexObj.ReleaseMutex();
 
             }
@@ -508,12 +522,13 @@ if (dateTimePicker1.Value.Date <= dateTimePicker2.Value.Date)
                 if (dateTimePicker1.Value.Date <= dateTimePicker2.Value.Date)
                 {
                     nFiles = 0; //количество обработанных файлов
-                    nDirs = 0;
+                    nDirs = 0;//количество обработанных папок
                     nDirsAll = 0;
                     count = 0;
+                    
                     BASE = new BaseNE();
                     BASE.AddingNE +=AddItemToListbox;
-                    listBox1.Items.Clear();//TODO проверить работу отображения процесса  чтения 
+                    listBox1.Items.Clear(); 
                     readFtpThread1 = new ParameterizedThreadStart(ReadLocal);
                     Thread readThread1 = new Thread(readFtpThread1);
                     readThread1.Start(Properties.Settings.Default.PM_Path_Local);
@@ -528,11 +543,14 @@ if (dateTimePicker1.Value.Date <= dateTimePicker2.Value.Date)
             }
             
         }
-
-        private void BASE_AddingNE(string name)
+//TODO get coordinates items and add new lables with count of errors (colorized)
+        public void AnalizeListBox()
         {
-            throw new NotImplementedException();
+        	for (int i = 0; i < listBox1.Items.Count; i++) {
+				var rectItem=listBox1.GetItemRectangle(i);
+        	}
         }
+
 
         /// <summary>
         /// View BASENE to chart
@@ -808,8 +826,8 @@ if (dateTimePicker1.Value.Date <= dateTimePicker2.Value.Date)
                 { //перебор файлов в конечной папке//заносим инфу из каждого файла в структуру BASE
                     var file = File.Split('\\').Last();
                     pm24 = new ReadPM(Dir24pm, file);//считали и проанализировали локальный файл
-                    if (!BASE.AddNE(pm24))
-                        ;// consts.AddItemToListBox(listBox1, pm24.ToString());
+                    BASE.AddNE(pm24);
+                        c_pm24++;
                 }
             }
             #endregion
@@ -822,8 +840,8 @@ if (dateTimePicker1.Value.Date <= dateTimePicker2.Value.Date)
                 foreach (var File in Files15)
                 { //перебор файлов в конечной папке//заносим инфу из каждого файла в структуру BASE
                     pm15 = new PM15(File);//считали и проанализировали локальный файл
-                    if (!BASE.AddNE(pm15))
-                        ;//consts.AddItemToListBox(listBox1, pm15.ToString());
+					BASE.AddNE(pm15);
+						c_pm15++;
                 }
             }
             #endregion
