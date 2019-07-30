@@ -26,7 +26,7 @@ namespace PMReader
         {
             return String.Format(NE_Name);
         }
-		public DateTime[] Intervals=new DateTime[8];
+		private DateTime[] Intervals=new DateTime[16];
 		
 		public PM15(string FilePath)
 		{
@@ -40,7 +40,7 @@ namespace PMReader
 				string nS;// text of NumberInterval
 				if(!File.Exists(FilePath)) 
 				{
-					Ports.Add(new NE.Port("fileNotFound"));
+					//Ports.Add(new NE.Port("fileNotFound"));
 					NE_Name = FilePath;
 					return;
 				}

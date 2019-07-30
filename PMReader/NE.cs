@@ -94,7 +94,7 @@ namespace PMReader
 			ISPM15 = false;
 			
         }
-                public NE(PM15 PM)
+        public NE(PM15 PM)
         {
             this.NE_Name = PM.NE_Name;
             Ports = PM.Ports;

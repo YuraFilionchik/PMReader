@@ -7,6 +7,8 @@ namespace PMReader
 {
     class BaseNE
     {
+        public delegate void addNeHandler(string name);
+        public event addNeHandler AddingNE;
         public List<NE> NeList;
 
         public BaseNE()
@@ -14,9 +16,10 @@ namespace PMReader
             NeList=new List<NE>();
         }
 
-        public void AddNewNE(NE ne)
+        private void AddNewNE(NE ne)
         {
             NeList.Add(ne);
+         if(ne!=null &&!string.IsNullOrWhiteSpace(ne.NE_Name) && AddingNE!=null)   AddingNE(ne.NE_Name);
         }
         
         public List<NE> GetPM24()
@@ -27,5 +30,38 @@ namespace PMReader
         {
                 	return NeList.Where(x => x.ISPM15).ToList();
         }
+        //add info for pm24
+        public bool AddNE(ReadPM pm)
+        {int index= this.NeList.FindIndex(x => x.NE_Name == pm.NE_Name && x.ISPM15 ==false);
+            if (index != -1)//Exist NE
+            {
+                this.NeList[index].AddInfo(pm);
+                return true;
+            }
+            else
+            {
+                this.AddNewNE(new NE(pm));
+                return false;
+                
+            }
+        }
+        //add info for pm15
+        public bool AddNE(PM15 pm)
+        {
+            int index = this.NeList.FindIndex(x => x.NE_Name == pm.NE_Name && x.ISPM15);
+            if (index != -1)//Exist NE
+            {
+                this.NeList[index].AddInfo(pm);
+                return true;
+            }
+            else
+            {
+                this.AddNewNE(new NE(pm));
+                return false;
+
+            }
+        }
     }
+
+  
 }
