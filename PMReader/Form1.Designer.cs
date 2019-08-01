@@ -79,6 +79,7 @@
         	this.comboBox4 = new System.Windows.Forms.ComboBox();
         	this.comboBox2 = new System.Windows.Forms.ComboBox();
         	this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+        	this.button3 = new System.Windows.Forms.Button();
         	((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
         	this.tabControl1.SuspendLayout();
         	this.tabPage1.SuspendLayout();
@@ -92,10 +93,10 @@
         	// 
         	// button1
         	// 
-        	this.button1.Location = new System.Drawing.Point(20, 90);
+        	this.button1.Location = new System.Drawing.Point(4, 90);
         	this.button1.Margin = new System.Windows.Forms.Padding(4);
         	this.button1.Name = "button1";
-        	this.button1.Size = new System.Drawing.Size(227, 37);
+        	this.button1.Size = new System.Drawing.Size(229, 37);
         	this.button1.TabIndex = 0;
         	this.button1.Text = "Показать статистику";
         	this.button1.UseVisualStyleBackColor = true;
@@ -160,11 +161,11 @@
 			| System.Windows.Forms.AnchorStyles.Left)));
         	this.listBox1.FormattingEnabled = true;
         	this.listBox1.ItemHeight = 16;
-        	this.listBox1.Location = new System.Drawing.Point(20, 135);
+        	this.listBox1.Location = new System.Drawing.Point(4, 135);
         	this.listBox1.Margin = new System.Windows.Forms.Padding(4);
         	this.listBox1.MultiColumn = true;
         	this.listBox1.Name = "listBox1";
-        	this.listBox1.Size = new System.Drawing.Size(227, 484);
+        	this.listBox1.Size = new System.Drawing.Size(118, 484);
         	this.listBox1.TabIndex = 4;
         	// 
         	// dataGridView1
@@ -190,8 +191,9 @@
         	this.dataGridView1.Name = "dataGridView1";
         	this.dataGridView1.ReadOnly = true;
         	this.dataGridView1.RowHeadersVisible = false;
-        	this.dataGridView1.Size = new System.Drawing.Size(929, 479);
+        	this.dataGridView1.Size = new System.Drawing.Size(951, 479);
         	this.dataGridView1.TabIndex = 5;
+        	this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1CellContentClick);
         	// 
         	// ports
         	// 
@@ -327,11 +329,11 @@
         	this.tabControl1.Controls.Add(this.tabPage2);
         	this.tabControl1.Controls.Add(this.tabPage3);
         	this.tabControl1.Controls.Add(this.tabPage4);
-        	this.tabControl1.Location = new System.Drawing.Point(259, 105);
+        	this.tabControl1.Location = new System.Drawing.Point(237, 105);
         	this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
         	this.tabControl1.Name = "tabControl1";
         	this.tabControl1.SelectedIndex = 0;
-        	this.tabControl1.Size = new System.Drawing.Size(945, 516);
+        	this.tabControl1.Size = new System.Drawing.Size(967, 516);
         	this.tabControl1.TabIndex = 10;
         	// 
         	// tabPage1
@@ -341,7 +343,7 @@
         	this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
         	this.tabPage1.Name = "tabPage1";
         	this.tabPage1.Padding = new System.Windows.Forms.Padding(4);
-        	this.tabPage1.Size = new System.Drawing.Size(937, 487);
+        	this.tabPage1.Size = new System.Drawing.Size(959, 487);
         	this.tabPage1.TabIndex = 0;
         	this.tabPage1.Text = "ТаблицаPM24";
         	this.tabPage1.UseVisualStyleBackColor = true;
@@ -355,7 +357,7 @@
         	this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
         	this.tabPage2.Name = "tabPage2";
         	this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
-        	this.tabPage2.Size = new System.Drawing.Size(937, 487);
+        	this.tabPage2.Size = new System.Drawing.Size(920, 487);
         	this.tabPage2.TabIndex = 1;
         	this.tabPage2.Text = "ГрафикPM24";
         	this.tabPage2.UseVisualStyleBackColor = true;
@@ -364,7 +366,7 @@
         	// 
         	this.comboBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
         	this.comboBox3.FormattingEnabled = true;
-        	this.comboBox3.Location = new System.Drawing.Point(180, 25);
+        	this.comboBox3.Location = new System.Drawing.Point(163, 25);
         	this.comboBox3.Margin = new System.Windows.Forms.Padding(4);
         	this.comboBox3.Name = "comboBox3";
         	this.comboBox3.Size = new System.Drawing.Size(389, 24);
@@ -374,7 +376,7 @@
         	// 
         	this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
         	this.comboBox1.FormattingEnabled = true;
-        	this.comboBox1.Location = new System.Drawing.Point(717, 25);
+        	this.comboBox1.Location = new System.Drawing.Point(700, 25);
         	this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
         	this.comboBox1.Name = "comboBox1";
         	this.comboBox1.Size = new System.Drawing.Size(160, 24);
@@ -411,7 +413,7 @@
         	series1.YValuesPerPoint = 2;
         	series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
         	this.chart1.Series.Add(series1);
-        	this.chart1.Size = new System.Drawing.Size(929, 479);
+        	this.chart1.Size = new System.Drawing.Size(912, 479);
         	this.chart1.TabIndex = 0;
         	this.chart1.Text = "BBE";
         	this.chart1.TextAntiAliasingQuality = System.Windows.Forms.DataVisualization.Charting.TextAntiAliasingQuality.SystemDefault;
@@ -430,7 +432,7 @@
         	this.tabPage3.Location = new System.Drawing.Point(4, 25);
         	this.tabPage3.Margin = new System.Windows.Forms.Padding(4);
         	this.tabPage3.Name = "tabPage3";
-        	this.tabPage3.Size = new System.Drawing.Size(937, 487);
+        	this.tabPage3.Size = new System.Drawing.Size(920, 487);
         	this.tabPage3.TabIndex = 2;
         	this.tabPage3.Text = "ТаблицаPM15";
         	this.tabPage3.UseVisualStyleBackColor = true;
@@ -458,7 +460,7 @@
         	this.dataGridView2.Name = "dataGridView2";
         	this.dataGridView2.ReadOnly = true;
         	this.dataGridView2.RowHeadersVisible = false;
-        	this.dataGridView2.Size = new System.Drawing.Size(937, 487);
+        	this.dataGridView2.Size = new System.Drawing.Size(920, 487);
         	this.dataGridView2.TabIndex = 6;
         	// 
         	// ports15
@@ -559,7 +561,7 @@
         	this.tabPage4.Location = new System.Drawing.Point(4, 25);
         	this.tabPage4.Margin = new System.Windows.Forms.Padding(4);
         	this.tabPage4.Name = "tabPage4";
-        	this.tabPage4.Size = new System.Drawing.Size(937, 487);
+        	this.tabPage4.Size = new System.Drawing.Size(920, 487);
         	this.tabPage4.TabIndex = 3;
         	this.tabPage4.Text = "ГрафикPM15";
         	this.tabPage4.UseVisualStyleBackColor = true;
@@ -568,7 +570,7 @@
         	// 
         	this.comboBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
         	this.comboBox4.FormattingEnabled = true;
-        	this.comboBox4.Location = new System.Drawing.Point(181, 21);
+        	this.comboBox4.Location = new System.Drawing.Point(164, 21);
         	this.comboBox4.Margin = new System.Windows.Forms.Padding(4);
         	this.comboBox4.Name = "comboBox4";
         	this.comboBox4.Size = new System.Drawing.Size(395, 24);
@@ -578,7 +580,7 @@
         	// 
         	this.comboBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
         	this.comboBox2.FormattingEnabled = true;
-        	this.comboBox2.Location = new System.Drawing.Point(717, 21);
+        	this.comboBox2.Location = new System.Drawing.Point(700, 21);
         	this.comboBox2.Margin = new System.Windows.Forms.Padding(4);
         	this.comboBox2.Name = "comboBox2";
         	this.comboBox2.Size = new System.Drawing.Size(160, 24);
@@ -614,7 +616,7 @@
         	series2.YValuesPerPoint = 2;
         	series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
         	this.chart2.Series.Add(series2);
-        	this.chart2.Size = new System.Drawing.Size(937, 487);
+        	this.chart2.Size = new System.Drawing.Size(920, 487);
         	this.chart2.TabIndex = 1;
         	this.chart2.Text = "BBE";
         	this.chart2.TextAntiAliasingQuality = System.Windows.Forms.DataVisualization.Charting.TextAntiAliasingQuality.SystemDefault;
@@ -626,16 +628,26 @@
         	title2.ToolTip = "Период, за который отображены данные";
         	this.chart2.Titles.Add(title2);
         	// 
+        	// button3
+        	// 
+        	this.button3.Location = new System.Drawing.Point(715, 72);
+        	this.button3.Name = "button3";
+        	this.button3.Size = new System.Drawing.Size(75, 23);
+        	this.button3.TabIndex = 11;
+        	this.button3.Text = "button3";
+        	this.button3.UseVisualStyleBackColor = true;
+        	this.button3.Click += new System.EventHandler(this.Button3Click);
+        	// 
         	// Form1
         	// 
         	this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
         	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         	this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
         	this.ClientSize = new System.Drawing.Size(1200, 625);
+        	this.Controls.Add(this.button3);
         	this.Controls.Add(this.checkBox1);
         	this.Controls.Add(this.button2);
         	this.Controls.Add(this.label4);
-        	this.Controls.Add(this.listBox1);
         	this.Controls.Add(this.label2);
         	this.Controls.Add(this.label3);
         	this.Controls.Add(this.label1);
@@ -643,10 +655,12 @@
         	this.Controls.Add(this.dateTimePicker1);
         	this.Controls.Add(this.button1);
         	this.Controls.Add(this.tabControl1);
+        	this.Controls.Add(this.listBox1);
         	this.Margin = new System.Windows.Forms.Padding(4);
         	this.MinimumSize = new System.Drawing.Size(878, 500);
         	this.Name = "Form1";
         	this.Text = "PM Reader";
+        	this.Load += new System.EventHandler(this.Form1Load);
         	((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
         	this.tabControl1.ResumeLayout(false);
         	this.tabPage1.ResumeLayout(false);
@@ -694,6 +708,7 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.ComboBox comboBox4;
         private System.Windows.Forms.DataGridViewTextBoxColumn ports15;
         private System.Windows.Forms.DataGridViewTextBoxColumn date15;
@@ -706,6 +721,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn FESES15;
         private System.Windows.Forms.DataGridViewTextBoxColumn FEUAS15;
         public MyListBox listBox1;
+    
     }
 }
 

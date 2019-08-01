@@ -53,7 +53,78 @@ namespace PMReader
         {
             public string PortName;
             public List<Statistics> Stat;
-            
+            public int BBECount
+            {
+				get {
+					int c = 0;
+					foreach (var st in Stat) 
+					{
+						c += st.BBE;						
+					}
+					return c;
+					}
+				
+            }
+            public int ESCount
+            {
+				get {
+					int c = 0;
+					foreach (var st in Stat) 
+					{
+						c += st.ES;						
+					}
+					return c;
+					}
+				
+            }
+            public int FEBBECount
+            {
+				get {
+					int c = 0;
+					foreach (var st in Stat) 
+					{
+						c += st.FEBBE;						
+					}
+					return c;
+					}
+				
+            }
+             public int FEESCount
+            {
+				get {
+					int c = 0;
+					foreach (var st in Stat) 
+					{
+						c += st.FEES;						
+					}
+					return c;
+					}
+				
+            }
+              public int NearTotal
+            {
+				get {
+					int c = 0;
+					foreach (var st in Stat) 
+					{
+						c += st.BBE+st.ES+st.SES+st.NEUAS;						
+					}
+					return c;
+					}
+				
+            }
+                            public int FarEndTotal
+            {
+				get {
+					int c = 0;
+					foreach (var st in Stat) 
+					{
+						c += st.FEBBE+st.FEES+st.FESES+st.FEUAS;						
+					}
+					return c;
+					}
+				
+            }
            public Port(int i)
            {
                PortName = "";
@@ -82,7 +153,64 @@ namespace PMReader
                 return PortName;
             }
         }
-
+       public int BBECount{
+			get
+			{
+				int c = 0;
+				foreach (var p in Ports) {
+					c += p.BBECount;
+				}
+				return c;
+			}			
+       }
+       public int ESCount{
+			get
+			{
+				int c = 0;
+				foreach (var p in Ports) {
+					c += p.BBECount;
+				}
+				return c;
+			}			
+       }
+        public int FEBBECount{
+			get
+			{
+				int c = 0;
+				foreach (var p in Ports) {
+					c += p.FEBBECount;
+				}
+				return c;
+			}			
+       }
+       public int FEESCount{
+			get
+			{
+				int c = 0;
+				foreach (var p in Ports) {
+					c += p.FEESCount;
+				}
+				return c;
+			}			
+       }
+       public int NearTotal{
+       	get{
+				int c = 0;
+				foreach (var p in Ports) {
+					c += p.NearTotal;
+				}
+				return c;
+       	}
+       }
+              public int FarEndTotal{
+       	get{
+				int c = 0;
+				foreach (var p in Ports) {
+					c += p.FarEndTotal;
+				}
+				return c;
+       	}
+       }
         public NE()
         {
             
@@ -190,5 +318,6 @@ namespace PMReader
                 throw;
             }
         }
+        
     }
 }

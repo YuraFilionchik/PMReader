@@ -547,7 +547,40 @@ string oldBut = button1.Text;
         public void AnalizeListBox()
         {
         	for (int i = 0; i < listBox1.Items.Count; i++) {
+				var item = listBox1.Items[i];
+				#region get NE
+				var NEs = BASE.NeList.Where(x => x.NE_Name == item.ToString());
+				int FarEnd = 0;
+				int NearEnd = 0;
+				if(NEs.Count()!=0) foreach (var ne in NEs)
+				{
+						FarEnd += ne.FarEndTotal;
+						NearEnd += ne.NearTotal;
+				}
+				#endregion
 				var rectItem=listBox1.GetItemRectangle(i);
+				var pointLB = listBox1.Location;
+				var start_Point = new Point(listBox1.Width+1,rectItem.Location.Y+pointLB.Y);
+				var lb = new Label();
+					lb.Tag = item.ToString();
+					lb.Size=new Size(lb.Size.Width,rectItem.Height-1) ;
+				lb.Font = new Font("Times New Roman", 8);
+				//var defaultColor = lb.BackColor;
+				if(FarEnd!=0||NearEnd!=0)
+				lb.BackColor = Color.Orange;
+				else {
+					lb.BackColor = DefaultBackColor;
+					lb.Text = "------";
+				}
+				if(FarEnd!=0)
+				lb.Text = "FE:"+FarEnd.ToString();//count errors
+				if(NearEnd!=0)
+				lb.Text = "NE:"+NearEnd.ToString();//count errors
+				lb.Location = start_Point;
+				
+				
+					this.Controls.Add(lb);
+			
         	}
         }
 
@@ -780,7 +813,7 @@ string oldBut = button1.Text;
                 	
                     
                     }
-                else MessageBox.Show("DrawDataGrid","Ошибка выбора listbox");
+               // else MessageBox.Show("DrawDataGrid","Ошибка выбора listbox");
        }
      public   bool IsClearPort(NE.Port port)
         { bool M=true;
@@ -900,5 +933,17 @@ string oldBut = button1.Text;
                 
             }
         }
+		void Form1Load(object sender, EventArgs e)
+		{
+	
+		}
+		void DataGridView1CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+	
+		}
+		void Button3Click(object sender, EventArgs e)
+		{
+			AnalizeListBox();
+		}
     }
 }
