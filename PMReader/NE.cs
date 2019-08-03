@@ -7,6 +7,8 @@ namespace PMReader
   public  class NE
     {
         public string NE_Name;
+        public string File24path;
+        public string File15path;
         public List<Port> Ports;
 		public bool ISPM15;
         public struct Statistics
@@ -153,7 +155,9 @@ namespace PMReader
                 return PortName;
             }
         }
-       public int BBECount{
+
+        #region COUNTS
+        public int BBECount{
 			get
 			{
 				int c = 0;
@@ -202,7 +206,7 @@ namespace PMReader
 				return c;
        	}
        }
-              public int FarEndTotal{
+        public int FarEndTotal{
        	get{
 				int c = 0;
 				foreach (var p in Ports) {
@@ -211,6 +215,8 @@ namespace PMReader
 				return c;
        	}
        }
+        #endregion
+
         public NE()
         {
             
@@ -218,6 +224,8 @@ namespace PMReader
         public NE(ReadPM PM)
         {
             this.NE_Name = PM.NE_Name;
+            this.File24path = PM.Filename;
+            this.File15path = "";
             Ports = PM.Ports;
 			ISPM15 = false;
 			
@@ -225,6 +233,8 @@ namespace PMReader
         public NE(PM15 PM)
         {
             this.NE_Name = PM.NE_Name;
+            this.File24path = "";
+            this.File15path = PM.Filename;
             Ports = PM.Ports;
 			ISPM15 = true;
 			

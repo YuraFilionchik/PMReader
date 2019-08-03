@@ -21,7 +21,7 @@ namespace PMReader
 {
     public partial class Form1 : Form
     {
-        private delegate void delevent();
+    	private delegate void delevent();
         private event delevent run;
         delegate void del(object o);
         static Mutex mutexObj = new Mutex(); //для очередности процессов разных доменов 100,101
@@ -50,7 +50,10 @@ namespace PMReader
 					Items.Add(item);
         	}
         }
-       
+       public Thread readThread1;
+       public Thread readThread2;
+       string tag="counts";//тег для labels
+       bool needRefrash=false;// if process of reading was run and nead refrash labels
         public Form1()
         {
             try
@@ -78,7 +81,7 @@ namespace PMReader
             comboBox4.SelectedIndexChanged += ComboBox4_SelectedIndexChanged;
             tabControl1.SelectedIndexChanged+= tabIndexchanged;
             BASE.AddingNE+= AddItemToListbox;//подписка на событие добавления нового элемента в БД
-                    
+			
                     }
             catch (Exception)
             {
@@ -92,15 +95,15 @@ namespace PMReader
         private void AddItemToListbox(string name)
         {
             consts.AddItemToListBox(listBox1, name);
+            
         }
         //TODO1 thread for Display
-        //TODO COLOR and error counter for items in listbox1
-        //TODO3 context menu READ stat for selected NE in listbox1
         //SELECT PORT
         private void ComboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
             var c = (ComboBox)sender;
-            DrawPortToChart(BASE.GetPM24().First(x=>x.NE_Name==listBox1.SelectedItem.ToString()).
+            if (listBox1.SelectedItem == null && listBox1.Items.Count == 1) listBox1.SelectedIndex = 0;
+            if(listBox1.SelectedItem!=null)DrawPortToChart(BASE.GetPM24().First(x=>x.NE_Name==listBox1.SelectedItem.ToString()).
                 Ports.First(p=>p.PortName==c.SelectedItem.ToString()),true,true);
           
         }
@@ -237,19 +240,19 @@ if (dateTimePicker1.Value.Date <= dateTimePicker2.Value.Date)
 	c_pm15=0;
 	c_pm24=0;
                 BASE=new BaseNE(); //Base of NE
-                    BASE.AddingNE += AddItemToListbox;
-
+                 BASE.AddingNE += AddItemToListbox;
+					RemoveLabels();
                  listBox1.Items.Clear();
                 readFtpThread1 = new ParameterizedThreadStart(ReadAndCopyFiles);
-                Thread readThread1 = new Thread(readFtpThread1);
+                readThread1 = new Thread(readFtpThread1);
                 readThread1.Start(Properties.Settings.Default.PM_Path_Server100);
 
 
              readFtpThread2 = new ParameterizedThreadStart(ReadAndCopyFiles);
-             Thread readThread2 = new Thread(readFtpThread2);
+             readThread2 = new Thread(readFtpThread2);
              readThread2.Start(Properties.Settings.Default.PM_Path_Server101);
                 }
-            else MessageBox.Show("Выбран неверный временной интервал!", "oops");
+            else MessageBox.Show("Выбран неверный временной интервал!", "ой");
             }
             catch (Exception)
             {
@@ -299,15 +302,48 @@ if (dateTimePicker1.Value.Date <= dateTimePicker2.Value.Date)
              string text = "Прочитано файлов pm24= "+c_pm24.ToString()+" и pm15= "+c_pm15+
                             	". Всего ="+(c_pm24+c_pm15).ToString();
                             Invoke(new Action<string>(s => label4.Text = s), text);
-                
+                needRefrash=true;
             }
             catch (Exception ex)
             {
-
+needRefrash=true;
                 MessageBox.Show(ex.ToString(), ex.Message);
             }
             
             
+        }
+        public void ReadLocalOne(object O, string[] name)
+        {
+            try
+            {
+                //структура локальных папок
+                //dom100/date/Dir24pm/file
+                c_pm24 = 0;
+                c_pm15 = 0;
+                string oldBut = button2.Text;
+                Invoke(new Action<string>(s => button2.Text = s), "Идет процесс анализа локальных файлов...");
+                Invoke(new Action<bool>(s => button2.Enabled = s), false);
+                Invoke(new Action<bool>(s => button1.Enabled = s), false);
+                string PM_path_Local = (string)O;
+                string dom100_path = PM_path_Local + "\\" + dom100;
+                string dom101_path = PM_path_Local + "\\" + dom101;
+                ReadLocalDOM(dom100_path,name);
+                ReadLocalDOM(dom101_path,name);
+                Invoke(new Action<bool>(s => button2.Enabled = s), true);
+                Invoke(new Action<bool>(s => button1.Enabled = s), true);
+                Invoke(new Action<string>(s => button2.Text = s), oldBut);
+                string text = "Прочитано файлов pm24= " + c_pm24.ToString() + " и pm15= " + c_pm15 +
+                                   ". Всего =" + (c_pm24 + c_pm15).ToString();
+                Invoke(new Action<string>(s => label4.Text = s), text);
+                needRefrash = true;
+            }
+            catch (Exception ex)
+            {
+                needRefrash = true;
+                MessageBox.Show(ex.ToString(), ex.Message);
+            }
+
+
         }
         public void ReadAndCopyFiles(object O)
         {
@@ -500,7 +536,7 @@ string oldBut = button1.Text;
                     Invoke(new Action<bool>(s => button2.Enabled = s), true);
                     Invoke(new Action<bool>(s => listBox1.Enabled = s), true);
                 mutexObj.ReleaseMutex();
-                
+               if(currentDOM==dom101)needRefrash=true;
             }
             catch (Exception ex)
             {
@@ -511,7 +547,7 @@ string oldBut = button1.Text;
                     Invoke(new Action<bool>(s => button2.Enabled = s), true);
                     Invoke(new Action<bool>(s => listBox1.Enabled = s), true);
                 mutexObj.ReleaseMutex();
-
+needRefrash=true;
             }
         }
 
@@ -529,8 +565,10 @@ string oldBut = button1.Text;
                     BASE = new BaseNE();
                     BASE.AddingNE +=AddItemToListbox;
                     listBox1.Items.Clear(); 
+					RemoveLabels();
+					
                     readFtpThread1 = new ParameterizedThreadStart(ReadLocal);
-                    Thread readThread1 = new Thread(readFtpThread1);
+                    readThread1 = new Thread(readFtpThread1);
                     readThread1.Start(Properties.Settings.Default.PM_Path_Local);
 
                 }
@@ -543,9 +581,27 @@ string oldBut = button1.Text;
             }
             
         }
-//TODO get coordinates items and add new lables with count of errors (colorized)
+//remove old labels
+		void RemoveLabels()
+		{
+			
+//			for (int i = 0; i < this.Controls.Count; i++) {
+//				if (Controls[i] is Label &&  Controls[i].Tag!=null&&
+//				    Controls[i].Tag.ToString()==tag)
+//				{
+//					
+//					//this.Controls.Remove(this.Controls[i]);
+//					
+//				}
+//			}
+			//this.Controls[i].Dispose();
+			
+			//this.Invalidate();//TODO remove labels
+		}
+
         public void AnalizeListBox()
-        {
+        { 
+
         	for (int i = 0; i < listBox1.Items.Count; i++) {
 				var item = listBox1.Items[i];
 				#region get NE
@@ -561,9 +617,14 @@ string oldBut = button1.Text;
 				var rectItem=listBox1.GetItemRectangle(i);
 				var pointLB = listBox1.Location;
 				var start_Point = new Point(listBox1.Width+1,rectItem.Location.Y+pointLB.Y);
-				var lb = new Label();
-					lb.Tag = item.ToString();
-					lb.Size=new Size(lb.Size.Width,rectItem.Height-1) ;
+				var old=Controls.Find(item.ToString(),false);
+				Label lb;
+				if (old.Any())
+					lb = (Label)old[0];
+				else
+					lb = new Label();
+				lb.Name = item.ToString();
+				lb.Size=new Size(lb.Size.Width,rectItem.Height-1) ;
 				lb.Font = new Font("Times New Roman", 8);
 				//var defaultColor = lb.BackColor;
 				if(FarEnd!=0||NearEnd!=0)
@@ -578,10 +639,10 @@ string oldBut = button1.Text;
 				lb.Text = "NE:"+NearEnd.ToString();//count errors
 				lb.Location = start_Point;
 				
-				
-					this.Controls.Add(lb);
+				this.Controls.Add(lb);
 			
         	}
+			needRefrash = false;
         }
 
 
@@ -879,7 +940,44 @@ string oldBut = button1.Text;
             }
             #endregion
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dateDir_path"></param>
+        /// <param name="filename">[0]-pm15, [1]-pm24</param>
+        public void ReadLocalDirDateFiles(string dateDir_path, string[] filename)
+        {
+            string Dir24pm, Dir15pm;
+            #region Check Dir24pm 15pm
+            if (Directory.Exists(dateDir_path + "\\" + pm24Dir))
+                Dir24pm = dateDir_path + "\\" + pm24Dir;
+            else
+                Dir24pm = "";
+            if (Directory.Exists(dateDir_path + "\\" + pm15Dir))
+                Dir15pm = dateDir_path + "\\" + pm15Dir;
+            else
+                Dir15pm = "";
+            #endregion
+            
+            #region read24 files 
+            if (File.Exists(Dir24pm+"/"+filename[1]))
+            {
+                Invoke(new Action<int>(s => nFiles += s),1);
+                ReadPM pm24 = new ReadPM(Dir24pm, filename[1]);//считали и проанализировали локальный файл
+                    BASE.AddNE(pm24);
+                    c_pm24++;
+            }
+            #endregion
+            #region read15 files
+            if (File.Exists(Dir15pm + "/" + filename[0]))
+            {
+                Invoke(new Action<int>(s => nFiles += s), 1);
+                PM15 pm15 = new PM15(Dir15pm + "/" + filename[0]);//считали и проанализировали локальный файл
+                    BASE.AddNE(pm15);
+                    c_pm15++;
+            }
+            #endregion
+        }
         /// <summary>
         /// read all files from dom100 or dom101 with subdirs into BASE
         /// </summary>
@@ -912,9 +1010,8 @@ string oldBut = button1.Text;
                     if (DirDate.Date > FromDate.Date && (DirDate.Date + new TimeSpan(1, 0, 0, 0)) <= ToDate.Date)
                     {
                         Invoke(new Action<int>(s => nDirs += s), 1);
+                        text = "Чтение папки "+dateDir_path;
                         ReadLocalDirDateFiles(dateDir_path);
-                        text = "Найдено " + nDirsAll + "локальных папок; Отфильтровано по дате " + nDirs +
-                                      "; Обработано файлов: " + nFiles;
                         Invoke(new Action<string>(s => label4.Text = s), text);
 
                     }
@@ -933,7 +1030,55 @@ string oldBut = button1.Text;
                 
             }
         }
-		void Form1Load(object sender, EventArgs e)
+        public void ReadLocalDOM(string dom, string[] NAME)
+        {
+            if (!Directory.Exists(dom)) return;
+            var LocalDirDates = Directory.GetDirectories(dom);
+            if (LocalDirDates.Count() != 0)
+            {
+                DateTime DirDate;
+                int countErr = 0;
+                string text;//строка отчета о количестве папок;
+
+                //перебор всех локальных папок date в DOM
+                foreach (var dateDir_path in LocalDirDates)
+                {
+                    var ftpItem = dateDir_path.Split('\\').Last();
+                    //перевод названия папки в дату    
+                    //if (ftpItem.ItemType != FtpItemType.Directory) continue;
+                    Invoke(new Action<int>(s => nDirsAll += s), 1);
+                    if (!DateTime.TryParseExact(ftpItem, "yyyyMMdd", CultureInfo.InvariantCulture,
+                            DateTimeStyles.None, out DirDate))
+                    {
+                        countErr += 1;
+                        continue;
+                    }
+
+                    //фильтр папок по дате
+                    if (DirDate.Date > FromDate.Date && (DirDate.Date + new TimeSpan(1, 0, 0, 0)) <= ToDate.Date)
+                    {
+                        Invoke(new Action<int>(s => nDirs += s), 1);
+                        text = "Чтение папки " + dateDir_path;
+                        ReadLocalDirDateFiles(dateDir_path, NAME);
+                        Invoke(new Action<string>(s => label4.Text = s), text);
+
+                    }
+                }
+
+                if (countErr != 0) MessageBox.Show("Пропущено " + countErr + " локальных папок при чтении ", "ошибка распознавание даты в имени папки");
+                //Invoke(new Action<string>(s => button2.Text = s), oldBut);
+
+
+            }
+            else
+            {
+                // Invoke(new Action<string>(s => button2.Text = s), oldBut);
+
+                MessageBox.Show("папка " + dom + " не содержит подпапок с файлами");
+
+            }
+        }
+        void Form1Load(object sender, EventArgs e)
 		{
 	
 		}
@@ -941,9 +1086,65 @@ string oldBut = button1.Text;
 		{
 	
 		}
-		void Button3Click(object sender, EventArgs e)
+
+        //load stat for selected NE
+        private void contextmenuLoad_Click(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedItems.Count == 0) return;
+            string NE_Name = listBox1.SelectedItem.ToString();
+            if (dateTimePicker1.Value.Date <= dateTimePicker2.Value.Date)
+            {
+                nFiles = 0; //количество обработанных файлов
+                nDirs = 0;//количество обработанных папок
+                nDirsAll = 0;
+                count = 0;
+                string[] files = FindFileName(NE_Name);
+                BASE = new BaseNE();
+                BASE.AddingNE += AddItemToListbox;
+                listBox1.Items.Clear();//???
+                RemoveLabels();
+               
+               readThread1 = new Thread(delegate() { ReadLocalOne(Properties.Settings.Default.PM_Path_Local, files); });
+                readThread1.Start();
+
+            }
+            else MessageBox.Show("Выбран неверный временной интервал!", "oops");
+            
+        }
+        /// <summary>
+        /// find original file name by NE name
+        /// </summary>
+        /// <param name="NAME"></param>
+        /// <returns>[1]-for pm24, [0]-for pm15</returns>
+        public string[] FindFileName(string NAME)
+        {
+            string[] res = new string[2] {"","" };
+            try
+            {
+                #region try find in BASE
+                var nes15 = BASE.GetPM15().Where(n=>n.NE_Name==NAME);
+                var nes24 = BASE.GetPM24().Where(n => n.NE_Name == NAME);
+                if (nes15.Any()) res[0] = nes15.First().File15path;
+                if (nes24.Any()) res[1] = nes24.First().File24path;
+
+                #endregion
+                return res;
+            }
+            catch (Exception)
+            {
+
+                return res;
+            }
+            
+        }
+        void Timer1Tick(object sender, EventArgs e)
 		{
-			AnalizeListBox();
+			
+			if ((readThread2==null || !readThread2.IsAlive)&&
+			    (readThread1==null || !readThread1.IsAlive) && 
+			    needRefrash && button1.Enabled)
+				AnalizeListBox();
 		}
+		
     }
 }

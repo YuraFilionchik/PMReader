@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.IO;
 using System.Globalization;
 using System.Text;
@@ -21,6 +22,7 @@ namespace PMReader
 	public class PM15
 	{
 		public string NE_Name;
+        public string Filename;
 		public List<NE.Port> Ports; //список портов в файле
 		public override string ToString()
         {
@@ -31,7 +33,7 @@ namespace PMReader
 		public PM15(string FilePath)
 		{
 			try {
-				
+                Filename = FilePath.Split('\\').Last();
 				Ports=new List<NE.Port>();
 				NE.Port currentPort=new NE.Port();
 				NE.Statistics currentStat=new NE.Statistics(1);

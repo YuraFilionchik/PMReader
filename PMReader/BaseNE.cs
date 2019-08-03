@@ -26,7 +26,7 @@ namespace PMReader
         {
         	return NeList.Where(x => x.ISPM15 == false).ToList();
         }
-                public List<NE> GetPM15()
+        public List<NE> GetPM15()
         {
                 	return NeList.Where(x => x.ISPM15).ToList();
         }
