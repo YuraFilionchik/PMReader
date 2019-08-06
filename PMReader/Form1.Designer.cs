@@ -47,16 +47,6 @@
             this.contextMenuLB = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.contextmenuLoad = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.ports = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bbe = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ES = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SES = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NEUAS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FEBBE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FEES = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FESES = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FEUAS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label4 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -68,7 +58,26 @@
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.ports = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bbe = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ES = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SES = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NEUAS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FEBBE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FEES = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FESES = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FEUAS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.link = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ports15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.link15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.date15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BBE15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ES15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -78,13 +87,6 @@
             this.FEES15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FESES15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FEUAS15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.contextMenuLB.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -201,114 +203,27 @@
             this.FEBBE,
             this.FEES,
             this.FESES,
-            this.FEUAS});
+            this.FEUAS,
+            this.link});
             this.dataGridView1.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(3, 3);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(711, 387);
             this.dataGridView1.TabIndex = 5;
-            // 
-            // ports
-            // 
-            this.ports.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ports.HeaderText = "Порты";
-            this.ports.Name = "ports";
-            this.ports.ReadOnly = true;
-            this.ports.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ports.Width = 46;
-            // 
-            // date
-            // 
-            this.date.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.date.HeaderText = "Дата";
-            this.date.Name = "date";
-            this.date.ReadOnly = true;
-            this.date.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.date.Width = 39;
-            // 
-            // bbe
-            // 
-            this.bbe.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.bbe.HeaderText = "BBE";
-            this.bbe.Name = "bbe";
-            this.bbe.ReadOnly = true;
-            this.bbe.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.bbe.Width = 34;
-            // 
-            // ES
-            // 
-            this.ES.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ES.HeaderText = "ES";
-            this.ES.Name = "ES";
-            this.ES.ReadOnly = true;
-            this.ES.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ES.Width = 27;
-            // 
-            // SES
-            // 
-            this.SES.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.SES.HeaderText = "SES";
-            this.SES.Name = "SES";
-            this.SES.ReadOnly = true;
-            this.SES.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.SES.Width = 34;
-            // 
-            // NEUAS
-            // 
-            this.NEUAS.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.NEUAS.HeaderText = "NEUAS";
-            this.NEUAS.Name = "NEUAS";
-            this.NEUAS.ReadOnly = true;
-            this.NEUAS.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.NEUAS.Width = 50;
-            // 
-            // FEBBE
-            // 
-            this.FEBBE.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.FEBBE.HeaderText = "FEBBE";
-            this.FEBBE.Name = "FEBBE";
-            this.FEBBE.ReadOnly = true;
-            this.FEBBE.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.FEBBE.Width = 47;
-            // 
-            // FEES
-            // 
-            this.FEES.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.FEES.HeaderText = "FEES";
-            this.FEES.Name = "FEES";
-            this.FEES.ReadOnly = true;
-            this.FEES.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.FEES.Width = 40;
-            // 
-            // FESES
-            // 
-            this.FESES.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.FESES.HeaderText = "FESES";
-            this.FESES.Name = "FESES";
-            this.FESES.ReadOnly = true;
-            this.FESES.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.FESES.Width = 47;
-            // 
-            // FEUAS
-            // 
-            this.FEUAS.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.FEUAS.HeaderText = "FEUAS";
-            this.FEUAS.Name = "FEUAS";
-            this.FEUAS.ReadOnly = true;
-            this.FEUAS.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.FEUAS.Width = 48;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(197, 58);
+            this.label4.Location = new System.Drawing.Point(175, 67);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(0, 18);
+            this.label4.Size = new System.Drawing.Size(38, 18);
             this.label4.TabIndex = 6;
+            this.label4.Text = "------";
             // 
             // button2
             // 
@@ -453,6 +368,7 @@
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ports15,
+            this.link15,
             this.date15,
             this.BBE15,
             this.ES15,
@@ -470,96 +386,6 @@
             this.dataGridView2.RowHeadersVisible = false;
             this.dataGridView2.Size = new System.Drawing.Size(717, 393);
             this.dataGridView2.TabIndex = 6;
-            // 
-            // ports15
-            // 
-            this.ports15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ports15.HeaderText = "Порты";
-            this.ports15.Name = "ports15";
-            this.ports15.ReadOnly = true;
-            this.ports15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ports15.Width = 46;
-            // 
-            // date15
-            // 
-            this.date15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.date15.HeaderText = "Дата";
-            this.date15.Name = "date15";
-            this.date15.ReadOnly = true;
-            this.date15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.date15.Width = 39;
-            // 
-            // BBE15
-            // 
-            this.BBE15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.BBE15.HeaderText = "BBE";
-            this.BBE15.Name = "BBE15";
-            this.BBE15.ReadOnly = true;
-            this.BBE15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.BBE15.Width = 34;
-            // 
-            // ES15
-            // 
-            this.ES15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ES15.HeaderText = "ES";
-            this.ES15.Name = "ES15";
-            this.ES15.ReadOnly = true;
-            this.ES15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ES15.Width = 27;
-            // 
-            // SES15
-            // 
-            this.SES15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.SES15.HeaderText = "SES";
-            this.SES15.Name = "SES15";
-            this.SES15.ReadOnly = true;
-            this.SES15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.SES15.Width = 34;
-            // 
-            // NEUAS15
-            // 
-            this.NEUAS15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.NEUAS15.HeaderText = "NEUAS";
-            this.NEUAS15.Name = "NEUAS15";
-            this.NEUAS15.ReadOnly = true;
-            this.NEUAS15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.NEUAS15.Width = 50;
-            // 
-            // FEBBE15
-            // 
-            this.FEBBE15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.FEBBE15.HeaderText = "FEBBE";
-            this.FEBBE15.Name = "FEBBE15";
-            this.FEBBE15.ReadOnly = true;
-            this.FEBBE15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.FEBBE15.Width = 47;
-            // 
-            // FEES15
-            // 
-            this.FEES15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.FEES15.HeaderText = "FEES";
-            this.FEES15.Name = "FEES15";
-            this.FEES15.ReadOnly = true;
-            this.FEES15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.FEES15.Width = 40;
-            // 
-            // FESES15
-            // 
-            this.FESES15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.FESES15.HeaderText = "FESES";
-            this.FESES15.Name = "FESES15";
-            this.FESES15.ReadOnly = true;
-            this.FESES15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.FESES15.Width = 47;
-            // 
-            // FEUAS15
-            // 
-            this.FEUAS15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.FEUAS15.HeaderText = "FEUAS";
-            this.FEUAS15.Name = "FEUAS15";
-            this.FEUAS15.ReadOnly = true;
-            this.FEUAS15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.FEUAS15.Width = 48;
             // 
             // tabPage4
             // 
@@ -652,6 +478,201 @@
             this.checkBox2.UseVisualStyleBackColor = true;
             this.checkBox2.CheckedChanged += new System.EventHandler(this.CheckBox1CheckedChanged);
             // 
+            // ports
+            // 
+            this.ports.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ports.HeaderText = "Порты";
+            this.ports.Name = "ports";
+            this.ports.ReadOnly = true;
+            this.ports.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ports.Width = 46;
+            // 
+            // date
+            // 
+            this.date.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.date.HeaderText = "Дата";
+            this.date.Name = "date";
+            this.date.ReadOnly = true;
+            this.date.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.date.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.date.Width = 39;
+            // 
+            // bbe
+            // 
+            this.bbe.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.bbe.HeaderText = "BBE";
+            this.bbe.Name = "bbe";
+            this.bbe.ReadOnly = true;
+            this.bbe.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.bbe.Width = 34;
+            // 
+            // ES
+            // 
+            this.ES.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ES.HeaderText = "ES";
+            this.ES.Name = "ES";
+            this.ES.ReadOnly = true;
+            this.ES.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ES.Width = 27;
+            // 
+            // SES
+            // 
+            this.SES.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.SES.HeaderText = "SES";
+            this.SES.Name = "SES";
+            this.SES.ReadOnly = true;
+            this.SES.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.SES.Width = 34;
+            // 
+            // NEUAS
+            // 
+            this.NEUAS.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.NEUAS.HeaderText = "NEUAS";
+            this.NEUAS.Name = "NEUAS";
+            this.NEUAS.ReadOnly = true;
+            this.NEUAS.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.NEUAS.Width = 50;
+            // 
+            // FEBBE
+            // 
+            this.FEBBE.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.FEBBE.HeaderText = "FEBBE";
+            this.FEBBE.Name = "FEBBE";
+            this.FEBBE.ReadOnly = true;
+            this.FEBBE.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.FEBBE.Width = 47;
+            // 
+            // FEES
+            // 
+            this.FEES.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.FEES.HeaderText = "FEES";
+            this.FEES.Name = "FEES";
+            this.FEES.ReadOnly = true;
+            this.FEES.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.FEES.Width = 40;
+            // 
+            // FESES
+            // 
+            this.FESES.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.FESES.HeaderText = "FESES";
+            this.FESES.Name = "FESES";
+            this.FESES.ReadOnly = true;
+            this.FESES.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.FESES.Width = 47;
+            // 
+            // FEUAS
+            // 
+            this.FEUAS.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.FEUAS.HeaderText = "FEUAS";
+            this.FEUAS.Name = "FEUAS";
+            this.FEUAS.ReadOnly = true;
+            this.FEUAS.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.FEUAS.Width = 48;
+            // 
+            // link
+            // 
+            this.link.HeaderText = "link";
+            this.link.Name = "link";
+            this.link.ReadOnly = true;
+            this.link.Visible = false;
+            // 
+            // ports15
+            // 
+            this.ports15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ports15.HeaderText = "Порты";
+            this.ports15.Name = "ports15";
+            this.ports15.ReadOnly = true;
+            this.ports15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ports15.Width = 46;
+            // 
+            // link15
+            // 
+            this.link15.HeaderText = "link";
+            this.link15.Name = "link15";
+            this.link15.ReadOnly = true;
+            this.link15.Visible = false;
+            // 
+            // date15
+            // 
+            this.date15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.date15.HeaderText = "Дата";
+            this.date15.Name = "date15";
+            this.date15.ReadOnly = true;
+            this.date15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.date15.Width = 39;
+            // 
+            // BBE15
+            // 
+            this.BBE15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.BBE15.HeaderText = "BBE";
+            this.BBE15.Name = "BBE15";
+            this.BBE15.ReadOnly = true;
+            this.BBE15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.BBE15.Width = 34;
+            // 
+            // ES15
+            // 
+            this.ES15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ES15.HeaderText = "ES";
+            this.ES15.Name = "ES15";
+            this.ES15.ReadOnly = true;
+            this.ES15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ES15.Width = 27;
+            // 
+            // SES15
+            // 
+            this.SES15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.SES15.HeaderText = "SES";
+            this.SES15.Name = "SES15";
+            this.SES15.ReadOnly = true;
+            this.SES15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.SES15.Width = 34;
+            // 
+            // NEUAS15
+            // 
+            this.NEUAS15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.NEUAS15.HeaderText = "NEUAS";
+            this.NEUAS15.Name = "NEUAS15";
+            this.NEUAS15.ReadOnly = true;
+            this.NEUAS15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.NEUAS15.Width = 50;
+            // 
+            // FEBBE15
+            // 
+            this.FEBBE15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.FEBBE15.HeaderText = "FEBBE";
+            this.FEBBE15.Name = "FEBBE15";
+            this.FEBBE15.ReadOnly = true;
+            this.FEBBE15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.FEBBE15.Width = 47;
+            // 
+            // FEES15
+            // 
+            this.FEES15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.FEES15.HeaderText = "FEES";
+            this.FEES15.Name = "FEES15";
+            this.FEES15.ReadOnly = true;
+            this.FEES15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.FEES15.Width = 40;
+            // 
+            // FESES15
+            // 
+            this.FESES15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.FESES15.HeaderText = "FESES";
+            this.FESES15.Name = "FESES15";
+            this.FESES15.ReadOnly = true;
+            this.FESES15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.FESES15.Width = 47;
+            // 
+            // FEUAS15
+            // 
+            this.FEUAS15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.FEUAS15.HeaderText = "FEUAS";
+            this.FEUAS15.Name = "FEUAS15";
+            this.FEUAS15.ReadOnly = true;
+            this.FEUAS15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.FEUAS15.Width = 48;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -703,16 +724,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ports;
-        private System.Windows.Forms.DataGridViewTextBoxColumn date;
-        private System.Windows.Forms.DataGridViewTextBoxColumn bbe;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ES;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SES;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NEUAS;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FEBBE;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FEES;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FESES;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FEUAS;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button2;
         public System.Windows.Forms.TabControl tabControl1;
@@ -723,7 +734,25 @@
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.ComboBox comboBox4;
+        public MyListBox listBox1;
+        public System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuLB;
+        private System.Windows.Forms.ToolStripMenuItem contextmenuLoad;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ports;
+        private System.Windows.Forms.DataGridViewTextBoxColumn date;
+        private System.Windows.Forms.DataGridViewTextBoxColumn bbe;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ES;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SES;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NEUAS;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FEBBE;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FEES;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FESES;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FEUAS;
+        private System.Windows.Forms.DataGridViewTextBoxColumn link;
         private System.Windows.Forms.DataGridViewTextBoxColumn ports15;
+        private System.Windows.Forms.DataGridViewTextBoxColumn link15;
         private System.Windows.Forms.DataGridViewTextBoxColumn date15;
         private System.Windows.Forms.DataGridViewTextBoxColumn BBE15;
         private System.Windows.Forms.DataGridViewTextBoxColumn ES15;
@@ -733,12 +762,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn FEES15;
         private System.Windows.Forms.DataGridViewTextBoxColumn FESES15;
         private System.Windows.Forms.DataGridViewTextBoxColumn FEUAS15;
-        public MyListBox listBox1;
-        public System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.ContextMenuStrip contextMenuLB;
-        private System.Windows.Forms.ToolStripMenuItem contextmenuLoad;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.CheckBox checkBox2;
     }
 }
 

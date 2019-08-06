@@ -93,7 +93,8 @@ namespace PMReader
             comboBox4.SelectedIndexChanged += ComboBox4_SelectedIndexChanged;
             tabControl1.SelectedIndexChanged+= tabIndexchanged;
             BASE.AddingNE+= AddItemToListbox;//подписка на событие добавления нового элемента в БД
-			
+                dataGridView1.CellContentDoubleClick += DataGridView1_CellContentDoubleClick;
+                dataGridView2.CellContentDoubleClick += DataGridView2_CellContentDoubleClick;
                     }
             catch (Exception)
             {
@@ -103,9 +104,27 @@ namespace PMReader
            
            
         }
+
+        private void DataGridView2_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView2.SelectedRows.Count == 0) return;
+            var selectedRow = dataGridView2.SelectedRows[0];
+            string filepath = selectedRow.Cells["link15"].Value.ToString();//TODO DATE
+            if (File.Exists(filepath)) System.Diagnostics.Process.Start("C:\\Windows\\System32\\notepad.exe", filepath);
+        }
+
+
         #endregion
 
         #region events
+        //doubleClick datagrid1.Cell - Open pm24 file
+        private void DataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count == 0) return;
+            var selectedRow = dataGridView1.SelectedRows[0];
+            string filepath = selectedRow.Cells["link"].Value.ToString();//TODO DATE
+            if (File.Exists(filepath)) System.Diagnostics.Process.Start("C:\\Windows\\System32\\notepad.exe",filepath);
+        }
         private void AddItemToListbox(string name)
         {
             consts.AddItemToListBox(listBox1, name);
@@ -783,9 +802,10 @@ needRefrash=true;
 
                 int nrow;
                 if (nNe != -1 )
-                {  
-                	
-                	foreach (var port in BASE.NeList[nNe].Ports)
+                {
+                string NE_name = BASE.NeList[nNe].NE_Name;
+
+                    foreach (var port in BASE.NeList[nNe].Ports)
                     { 
 							if (port.PortName == "fileNotFound")
 								continue;
@@ -810,6 +830,7 @@ needRefrash=true;
                             {
                             dataGridView1.Rows[nrow].DefaultCellStyle.BackColor = Color.Honeydew;
                             dataGridView1.Rows[nrow].Cells["date"].Value = st.Date.ToShortDateString();
+                            dataGridView1.Rows[nrow].Cells["link"].Value = st.FilePath;
                             dataGridView1.Rows[nrow].Cells["bbe"].Value = st.BBE;
                             dataGridView1.Rows[nrow].Cells["ES"].Value = st.ES;
                             dataGridView1.Rows[nrow].Cells["SES"].Value = st.SES;
@@ -824,6 +845,7 @@ needRefrash=true;
                              dataGridView2.Rows[nrow].DefaultCellStyle.BackColor = Color.Honeydew;
                         
                             dataGridView2.Rows[nrow].Cells["date15"].Value = st.Date.ToShortDateString()+"--"+st.Date.ToShortTimeString();
+                            dataGridView1.Rows[nrow].Cells["link15"].Value = st.FilePath;
                             dataGridView2.Rows[nrow].Cells["BBE15"].Value = st.BBE;
                             dataGridView2.Rows[nrow].Cells["ES15"].Value = st.ES;
                             dataGridView2.Rows[nrow].Cells["SES15"].Value = st.SES;

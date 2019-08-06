@@ -53,8 +53,9 @@ namespace PMReader
 					NE_Name = FilePath;
 					return;
 				}
-				//all  lines in file
-				var Lines=File.ReadAllLines(FilePath);
+                currentStat.FilePath = FilePath;
+                //all  lines in file
+                var Lines=File.ReadAllLines(FilePath);
 		for (int i = 0; i < Lines.Length; i++) //проход по всем строкам
 				{
 					var segments=Lines[i].Split('\t');
@@ -76,7 +77,7 @@ namespace PMReader
 					//save prev port
 					if(!firstPort) 
 					{
-						currentPort.Stat.Add(currentStat);
+                        currentPort.Stat.Add(currentStat);
 						Ports.Add(currentPort);
                         currentPort = new NE.Port(port_Name);
                     }
@@ -90,7 +91,8 @@ namespace PMReader
 						currentInteral=int.Parse(nS); 
 						if(currentInteral!=0) currentPort.Stat.Add(currentStat);
 						currentStat=new NE.Statistics(1);
-						currentStat.Date=Intervals[currentInteral];
+                            currentStat.FilePath = FilePath;
+                            currentStat.Date=Intervals[currentInteral];
 					break;
 				case "ME:":  //ERRORS
 					var erType=segments[1];

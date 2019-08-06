@@ -13,6 +13,7 @@ namespace PMReader
 		public bool ISPM15;
         public struct Statistics
         {
+            public string FilePath;
             public DateTime Date;
             public int FEBBE;
             public int FEES;
@@ -35,7 +36,7 @@ namespace PMReader
                 SES = 0;
                 FEUAS = 0;
                 NEUAS = 0;
-                
+                FilePath = "";
             }
 
                         public bool HaveError()

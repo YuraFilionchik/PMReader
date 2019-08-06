@@ -34,14 +34,15 @@ namespace PMReader
                 StreamReader f;
                 string Line;
 				NE.Port newPort=new NE.Port(1);
-                NE.Statistics newStat=new NE.Statistics(1);
+                NE.Statistics currentStat=new NE.Statistics(1);
                 Ports=new List<NE.Port>();
                 string filepath = FileDir + "/" + Filename;
                 string PortName;
              
                 if (File.Exists(filepath))
                 {
-                	var tFile=File.ReadAllText(filepath);
+                    currentStat.FilePath = filepath;
+                    var tFile=File.ReadAllText(filepath);
                 	if(tFile.Contains("15 minutes")) //read pm15 file
                 	   {
 						return;
@@ -67,8 +68,9 @@ namespace PMReader
                         int ind = Ports.FindIndex(p => p.PortName == PortName);  //index of port in Ports
                         if (ind == -1)
                         {
-                            newStat = new NE.Statistics(1);
-                            newStat.Date = Date.Date; //Date
+                            currentStat = new NE.Statistics(1);
+                            currentStat.Date = Date.Date; //Date
+                            currentStat.FilePath = filepath;
                         }
                         
                         f.ReadLine(); // next
@@ -81,28 +83,28 @@ namespace PMReader
                             switch (Line.Split()[1].Trim())
                             {
                                 case "FEBBE":
-                                    int.TryParse(Line.Split()[2].Trim(), out newStat.FEBBE);
+                                    int.TryParse(Line.Split()[2].Trim(), out currentStat.FEBBE);
                                     break;
                                 case "BBE":
-                                    int.TryParse(Line.Split()[2].Trim(), out newStat.BBE);
+                                    int.TryParse(Line.Split()[2].Trim(), out currentStat.BBE);
                                     break;
                                 case "FEES":
-                                    int.TryParse(Line.Split()[2].Trim(), out newStat.FEES);
+                                    int.TryParse(Line.Split()[2].Trim(), out currentStat.FEES);
                                     break;
                                 case "ES":
-                                    int.TryParse(Line.Split()[2].Trim(), out newStat.ES);
+                                    int.TryParse(Line.Split()[2].Trim(), out currentStat.ES);
                                     break;
                                 case "SES":
-                                    int.TryParse(Line.Split()[2].Trim(), out newStat.SES);
+                                    int.TryParse(Line.Split()[2].Trim(), out currentStat.SES);
                                     break;
                                 case "FESES":
-                                    int.TryParse(Line.Split()[2].Trim(), out newStat.FESES);
+                                    int.TryParse(Line.Split()[2].Trim(), out currentStat.FESES);
                                     break;
                                 case "FEUAS":
-                                    int.TryParse(Line.Split()[2].Trim(), out newStat.FEUAS);
+                                    int.TryParse(Line.Split()[2].Trim(), out currentStat.FEUAS);
                                     break;
                                 case "NEUAS":
-                                    int.TryParse(Line.Split()[2].Trim(), out newStat.NEUAS);
+                                    int.TryParse(Line.Split()[2].Trim(), out currentStat.NEUAS);
                                     break;
                             }
                             Line = f.ReadLine();
@@ -127,17 +129,17 @@ namespace PMReader
                             //порт не найден
                             newPort = new NE.Port(1);
                             newPort.PortName = PortName;
-                            newPort.Stat.Add(newStat);
+                            newPort.Stat.Add(currentStat);
                             Ports.Add(newPort);  //добавление нового порта
                         }
                         else //порт найден. добавляем stat в существующий
                         {
-                            var removeStat=Ports[ind].Stat.FindIndex(s => s.Date.Date == newStat.Date.Date);
-                            if (removeStat==-1) Ports[ind].Stat.Add(newStat); //нету такой статы
+                            var removeStat=Ports[ind].Stat.FindIndex(s => s.Date.Date == currentStat.Date.Date);
+                            if (removeStat==-1) Ports[ind].Stat.Add(currentStat); //нету такой статы
                             else //удаляем существующую стату чтобы добавить новую
                             {
                                 Ports[ind].Stat.Remove(Ports[ind].Stat[removeStat]); 
-                                Ports[ind].Stat.Add(newStat);
+                                Ports[ind].Stat.Add(currentStat);
                             }
                         }
                     } //конец чтения файла
