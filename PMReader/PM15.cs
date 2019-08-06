@@ -24,6 +24,13 @@ namespace PMReader
 		public string NE_Name;
         public string Filename;
 		public List<NE.Port> Ports; //список портов в файле
+        public bool HaveErrors
+        {
+            get
+            {
+                return Ports.Any(x => x.HaveError());
+            }
+        }
 		public override string ToString()
         {
             return String.Format(NE_Name);
@@ -71,7 +78,8 @@ namespace PMReader
 					{
 						currentPort.Stat.Add(currentStat);
 						Ports.Add(currentPort);
-					}
+                        currentPort = new NE.Port(port_Name);
+                    }
 					else {
 						currentPort=new NE.Port(port_Name);
 						firstPort=false;

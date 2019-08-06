@@ -40,7 +40,7 @@ namespace PMReader
 
                         public bool HaveError()
                         {
-                        	if(this.BBE==0 && 
+                        	if(BBE==0 && 
                         	   FEBBE==0 && 
                         	   FEES==0 &&
                         	   ES==0 &&

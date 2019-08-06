@@ -21,7 +21,8 @@ namespace PMReader
 {
     public partial class Form1 : Form
     {
-    	private delegate void delevent();
+        #region свойства класса Form1
+        private delegate void delevent();
         private event delevent run;
         delegate void del(object o);
         static Mutex mutexObj = new Mutex(); //для очередности процессов разных доменов 100,101
@@ -32,7 +33,20 @@ namespace PMReader
         private int count;
         private int c_pm24;//count of pm24 files
         private int c_pm15;//count of pm15 files
-        DateTime FromDate, ToDate;
+        DateTime FromDate
+        {
+            get
+            {
+                return dateTimePicker1.Value;
+            }
+        }
+        DateTime ToDate
+        {
+            get
+            {
+                return dateTimePicker2.Value;
+            }
+        }
         DateTime dateNow = DateTime.Now.Date;
         private string DirLocal = Properties.Settings.Default.PM_Path_Local;
         private ParameterizedThreadStart readFtpThread1;
@@ -50,10 +64,12 @@ namespace PMReader
 					Items.Add(item);
         	}
         }
-       public Thread readThread1;
-       public Thread readThread2;
-       string tag="counts";//тег для labels
+       public Thread readThread1; //for dom100
+       public Thread readThread2;//for dom101
+       string tag="counts";//тег для dynamic labels
        bool needRefrash=false;// if process of reading was run and nead refrash labels
+        #endregion
+        #region Конструктор Form1
         public Form1()
         {
             try
@@ -62,18 +78,14 @@ namespace PMReader
             #region create dir PM
 		 if (!Directory.Exists(DirLocal)) System.IO.Directory.CreateDirectory(DirLocal);
            #endregion
-           Text="PM reader v"+ Assembly.GetExecutingAssembly().GetName().Version.ToString();
-                comboBox1.Items.AddRange(Enum.GetNames(typeof(SeriesChartType)));
+            Text="PM reader v"+ Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            comboBox1.Items.AddRange(Enum.GetNames(typeof(SeriesChartType)));
             comboBox2.Items.AddRange(Enum.GetNames(typeof(SeriesChartType)));
             count = 0;
             c_pm15=0;
             c_pm24=0;
             dateTimePicker1.Value = dateNow;
             dateTimePicker2.Value = dateNow;
-            FromDate = dateTimePicker1.Value;
-            ToDate = dateTimePicker2.Value;
-            dateTimePicker1.ValueChanged += new EventHandler(dateTimePicker1_ValueChanged);
-            dateTimePicker2.ValueChanged += new EventHandler(dateTimePicker2_ValueChanged);
             listBox1.SelectedIndexChanged += new EventHandler(listBox1_SelectedIndexChanged);
             comboBox1.SelectedIndexChanged+=comboBoxSelect;
             comboBox2.SelectedIndexChanged += ComboBox2_SelectedIndexChanged;
@@ -91,11 +103,12 @@ namespace PMReader
            
            
         }
+        #endregion
 
+        #region events
         private void AddItemToListbox(string name)
         {
             consts.AddItemToListBox(listBox1, name);
-            
         }
         //TODO1 thread for Display
         //SELECT PORT
@@ -103,20 +116,20 @@ namespace PMReader
         {
             var c = (ComboBox)sender;
             if (listBox1.SelectedItem == null && listBox1.Items.Count == 1) listBox1.SelectedIndex = 0;
-            if(listBox1.SelectedItem!=null)DrawPortToChart(BASE.GetPM24().First(x=>x.NE_Name==listBox1.SelectedItem.ToString()).
-                Ports.First(p=>p.PortName==c.SelectedItem.ToString()),true,true);
-          
+            if (listBox1.SelectedItem != null) DrawPortToChart(BASE.GetPM24().First(x => x.NE_Name == listBox1.SelectedItem.ToString()).
+                    Ports.First(p => p.PortName == c.SelectedItem.ToString()), true, true);
+
         }
         //SELECT PORT
         private void ComboBox4_SelectedIndexChanged(object sender, EventArgs e)
         {
             var c = (ComboBox)sender;
             DrawPortToChart(BASE.GetPM15().First(x => x.NE_Name == listBox1.SelectedItem.ToString()).
-                Ports.First(p => p.PortName == c.SelectedItem.ToString()), true, true);
+                Ports.First(p => p.PortName == c.SelectedItem.ToString()), false, true);
         }
 
         /// <summary>
-        /// Select line type in chart
+        /// Select line type in chart2  pm15
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -128,74 +141,26 @@ namespace PMReader
                     chart2.Series[i].ChartType = (SeriesChartType)Enum.Parse(typeof(SeriesChartType), comboBox2.SelectedItem.ToString());
                 }
         }
+
+        //Выбор порта для отображения статы в Chart1 pm24
         void comboBoxSelect(object sender, EventArgs e)
-		{
-			if(chart1.Series.Count!=0 && !String.IsNullOrWhiteSpace(comboBox1.SelectedItem.ToString()))
-			for(int i=0;i<chart1.Series.Count;i++)
-			{
-				chart1.Series[i].ChartType=(SeriesChartType)Enum.Parse(typeof(SeriesChartType),comboBox1.SelectedItem.ToString());
-			}
-		}
-        //вывод информации из базы
+        {
+            if (chart1.Series.Count != 0 && !String.IsNullOrWhiteSpace(comboBox1.SelectedItem.ToString()))
+                for (int i = 0; i < chart1.Series.Count; i++)
+                {
+                    chart1.Series[i].ChartType = (SeriesChartType)Enum.Parse(typeof(SeriesChartType), comboBox1.SelectedItem.ToString());
+                }
+        }
+        
+        //вывод информации из базы при выбобре из списка аппаратов
         void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-#region old code
-//
-//try
-//            {
-//               dataGridView1.Rows.Clear();
-//                int nNE = BASE.NeList.FindIndex(n => n.NE_Name == listBox1.SelectedItem.ToString());
-//                int nrow;
-//                if (nNE != -1)
-//                    foreach (var port in BASE.NeList[nNE].Ports)
-//                    { 
-//                        nrow=dataGridView1.Rows.Add();
-//                        dataGridView1.Rows[nrow].Cells["ports"].Value = port.PortName;
-//                        dataGridView1.Rows[nrow].DefaultCellStyle.BackColor = Color.BlanchedAlmond;
-//                        
-//                        foreach (var st in port.Stat)
-//                        {
-//                            nrow = dataGridView1.Rows.Add();
-//                            dataGridView1.Rows[nrow].DefaultCellStyle.BackColor = Color.Honeydew;
-//                            dataGridView1.Rows[nrow].Cells["date"].Value = st.Date.ToShortDateString();
-//                            dataGridView1.Rows[nrow].Cells["bbe"].Value = st.BBE;
-//                            dataGridView1.Rows[nrow].Cells["ES"].Value = st.ES;
-//                            dataGridView1.Rows[nrow].Cells["SES"].Value = st.SES;
-//                            dataGridView1.Rows[nrow].Cells["NEUAS"].Value = st.NEUAS;
-//                            dataGridView1.Rows[nrow].Cells["FEBBE"].Value = st.FEBBE;
-//                            dataGridView1.Rows[nrow].Cells["FEES"].Value = st.FEES;
-//                            dataGridView1.Rows[nrow].Cells["FESES"].Value = st.FESES;
-//                            dataGridView1.Rows[nrow].Cells["FEUAS"].Value = st.FEUAS;
-//                        }
-//                        nrow = dataGridView1.Rows.Add();
-//                        dataGridView1.Rows[nrow].DefaultCellStyle.BackColor = Color.Indigo;
-//                    }
-//                else MessageBox.Show("Ошибка выбора listbox");
-//
-//            }
-//            catch (Exception)
-//            {
-//                
-//                throw;
-//            }
-#endregion
-	if (checkBox1.Checked) Display (false);
-	else Display(true);
-	
+
+            if (checkBox1.Checked) Display(false);
+            else Display(true);
+
         }
 
-        #region events
-        void dateTimePicker2_ValueChanged(object sender, EventArgs e)
-        {
-           
-            ToDate = dateTimePicker2.Value;
-        }
-        void dateTimePicker1_ValueChanged(object sender, EventArgs e)
-        {
-            
-                FromDate = dateTimePicker1.Value;
-           
-        }
         //переключение вкладок
 		void tabIndexchanged(object sender, EventArgs e)
 		{
@@ -212,13 +177,13 @@ namespace PMReader
             {
                 nNe= BASE.NeList.FindIndex(n => n.NE_Name == listBox1.SelectedItem.ToString()
                                            && !n.ISPM15);
-                DrawDataGrid(nNe,true,checkBox1.Checked);
+                DrawDataGrid(nNe,true,!checkBox1.Checked);
             }
             else if (tabControl1.SelectedIndex == 2 && (listBox1.SelectedItems.Count != 0))
             {
                 nNe = BASE.NeList.FindIndex(n => n.NE_Name == listBox1.SelectedItem.ToString()
                                             && n.ISPM15);
-                DrawDataGrid(nNe, false, checkBox1.Checked);
+                DrawDataGrid(nNe, false, !checkBox1.Checked);
             }
 
         }
@@ -775,14 +740,17 @@ needRefrash=true;
        private void Display(bool all)
         {        	
         	bool pm24=true;
-        	 try
+            string selectedNE = "";
+            try
             {
-        	 	if(tabControl1.SelectedIndex==0) pm24=true;
+                if (listBox1.SelectedItem != null) selectedNE = listBox1.SelectedItem.ToString();
+                else return;
+               
+                if (tabControl1.SelectedIndex==0) pm24=true;
         	 	else if(tabControl1.SelectedIndex==2) pm24=false;
-               int nNE = BASE.NeList.FindIndex(n => n.NE_Name == listBox1.SelectedItem.ToString()
+               int indexNE = BASE.NeList.FindIndex(n => n.NE_Name == selectedNE
        	                               && n.ISPM15!=pm24);  
-        	 	int nrow;
-                if (nNE != -1 )
+        	 	if (indexNE != -1 )
                 {
                 	if(tabControl1.SelectedIndex==1){
                 		DrawChart(BASE.GetPM24(),true);
@@ -791,7 +759,7 @@ needRefrash=true;
                 	else if(tabControl1.SelectedIndex==3) {
                 		DrawChart(BASE.GetPM15(), false); return;//only draw chart
                 	}
-                	DrawDataGrid(nNE,pm24,all);
+                	DrawDataGrid(indexNE,pm24,all);
                     
                 }
                 //else MessageBox.Show("Нет данной статистики за выбранный период");
@@ -808,11 +776,11 @@ needRefrash=true;
        	
        	if(pm24) {
        		dataGridView1.Rows.Clear();
-       	}else{
+       	}
+            else {
        		dataGridView2.Rows.Clear();
        	}
-//                int nNE = BASE.NeList.FindIndex(n => n.NE_Name == listBox1.SelectedItem.ToString()
-//       	                               && n.ISPM15!=pm24);
+
                 int nrow;
                 if (nNe != -1 )
                 {  
@@ -825,16 +793,17 @@ needRefrash=true;
 							nrow=pm24?dataGridView1.Rows.Add():dataGridView2.Rows.Add();
 							if(pm24){
                         dataGridView1.Rows[nrow].Cells["ports"].Value = port.PortName;
-                        dataGridView1.Rows[nrow].DefaultCellStyle.BackColor = Color.BlanchedAlmond;
+                       dataGridView1.Rows[nrow].DefaultCellStyle.BackColor = Color.BlanchedAlmond;
                         }
-                        else
+                        else //------pm15------
                         {
                         dataGridView2.Rows[nrow].Cells["ports15"].Value = port.PortName;
                         dataGridView2.Rows[nrow].DefaultCellStyle.BackColor = Color.BlanchedAlmond;
                         }
                         foreach (var st in port.Stat)
                         {
-                        if (!st.HaveError()) continue;
+                        //if (!st.HaveError()) continue;
+                        if (!st.HaveError() && checkBox2.Checked) continue; //показывать ли pm15 пустые интервалы
                         nrow =pm24?dataGridView1.Rows.Add():dataGridView2.Rows.Add();
                        
                             if (pm24)
@@ -852,7 +821,8 @@ needRefrash=true;
                             }
                             else 
                             {
-                            dataGridView2.Rows[nrow].DefaultCellStyle.BackColor = Color.Honeydew;
+                             dataGridView2.Rows[nrow].DefaultCellStyle.BackColor = Color.Honeydew;
+                        
                             dataGridView2.Rows[nrow].Cells["date15"].Value = st.Date.ToShortDateString()+"--"+st.Date.ToShortTimeString();
                             dataGridView2.Rows[nrow].Cells["BBE15"].Value = st.BBE;
                             dataGridView2.Rows[nrow].Cells["ES15"].Value = st.ES;
@@ -868,8 +838,8 @@ needRefrash=true;
                             
                         }
                          nrow=pm24?dataGridView1.Rows.Add():dataGridView2.Rows.Add();
-                         if(pm24)dataGridView1.Rows[nrow].DefaultCellStyle.BackColor = Color.Indigo;
-                         else dataGridView2.Rows[nrow].DefaultCellStyle.BackColor = Color.Indigo;
+                    if (pm24) dataGridView1.Rows[nrow].DefaultCellStyle.BackColor = Color.Indigo;
+                    else dataGridView2.Rows[nrow].DefaultCellStyle.BackColor = Color.Indigo;
                 }
                 	
                     
@@ -934,6 +904,7 @@ needRefrash=true;
                 foreach (var File in Files15)
                 { //перебор файлов в конечной папке//заносим инфу из каждого файла в структуру BASE
                     pm15 = new PM15(File);//считали и проанализировали локальный файл
+                    //if (pm15.HaveErrors) MessageBox.Show(pm15.NE_Name + Environment.NewLine + File);
 					BASE.AddNE(pm15);
 						c_pm15++;
                 }
@@ -1082,10 +1053,7 @@ needRefrash=true;
 		{
 	
 		}
-		void DataGridView1CellContentClick(object sender, DataGridViewCellEventArgs e)
-		{
-	
-		}
+		
 
         //load stat for selected NE
         private void contextmenuLoad_Click(object sender, EventArgs e)
