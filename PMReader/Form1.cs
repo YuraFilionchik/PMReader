@@ -33,7 +33,8 @@ namespace PMReader
         private int count;
         private int c_pm24;//count of pm24 files
         private int c_pm15;//count of pm15 files
-        DateTime FromDate
+        string oldBut;
+            DateTime FromDate
         {
             get
             {
@@ -84,7 +85,8 @@ namespace PMReader
             count = 0;
             c_pm15=0;
             c_pm24=0;
-            dateTimePicker1.Value = dateNow;
+                oldBut = button1.Text;
+                dateTimePicker1.Value = dateNow;
             dateTimePicker2.Value = dateNow;
             listBox1.SelectedIndexChanged += new EventHandler(listBox1_SelectedIndexChanged);
             comboBox1.SelectedIndexChanged+=comboBoxSelect;
@@ -109,7 +111,7 @@ namespace PMReader
         {
             if (dataGridView2.SelectedRows.Count == 0) return;
             var selectedRow = dataGridView2.SelectedRows[0];
-            string filepath = selectedRow.Cells["link15"].Value.ToString();//TODO DATE
+            string filepath = selectedRow.Cells["link15"].Value.ToString();
             if (File.Exists(filepath)) System.Diagnostics.Process.Start("C:\\Windows\\System32\\notepad.exe", filepath);
         }
 
@@ -122,7 +124,7 @@ namespace PMReader
         {
             if (dataGridView1.SelectedRows.Count == 0) return;
             var selectedRow = dataGridView1.SelectedRows[0];
-            string filepath = selectedRow.Cells["link"].Value.ToString();//TODO DATE
+            string filepath = selectedRow.Cells["link"].Value.ToString();
             if (File.Exists(filepath)) System.Diagnostics.Process.Start("C:\\Windows\\System32\\notepad.exe",filepath);
         }
         private void AddItemToListbox(string name)
@@ -214,7 +216,27 @@ namespace PMReader
         {
             try
             {
-if (dateTimePicker1.Value.Date <= dateTimePicker2.Value.Date)
+                #region EndProcesses
+                    if (readThread1 != null && readThread1.IsAlive)
+                {
+                    readThread1.Abort();
+                    button1.Text = oldBut;
+                    button2.Enabled = true;
+                    listBox1.Enabled = true;
+                    return;
+                }
+                if(readThread2 != null && readThread2.IsAlive)
+                {
+                    readThread2.Abort();
+                    button1.Text = oldBut;
+                    button2.Enabled = true;
+                    listBox1.Enabled = true;
+                    return;
+
+                }
+                #endregion
+
+                if (dateTimePicker1.Value.Date <= dateTimePicker2.Value.Date)
 {
     nFiles = 0; //количество обработанных файлов
     nDirs = 0;  
@@ -331,13 +353,13 @@ needRefrash=true;
         }
         public void ReadAndCopyFiles(object O)
         {
-string oldBut = button1.Text;
+
             try
             {
                 mutexObj.WaitOne();//wait until read dom100
                 
-                Invoke(new Action<string>(s => button1.Text = s), "Идет процесс анализа...");
-                Invoke(new Action<bool>(s => button1.Enabled = s), false);
+                Invoke(new Action<string>(s => button1.Text = s), "Работаю... Остановить?");
+                //Invoke(new Action<bool>(s => button1.Enabled = s), false);
                 Invoke(new Action<bool>(s => button2.Enabled = s), false);
                 Invoke(new Action<bool>(s => listBox1.Enabled = s), false);
                 string PM_path_server = (string)O;
@@ -346,16 +368,16 @@ string oldBut = button1.Text;
                 else currentDOM = dom101;
                 FtpClient client = new FtpClient();
                 del Mydel = n => listBox1.Items.Add(n);
-                int nNE;
+                
 
-
+                #region Connection FTP
                 //Задаём параметры клиента.
                 client.PassiveMode = true; //Включаем пассивный режим.
                 int TimeoutFTP = 30000; //Таймаут.
-                //string FTP_SERVER = Properties.Settings.Default.ftp_Address;
-                string FTP_SERVER = "127.0.0.1";
-                //int FTP_PORT = Properties.Settings.Default.ftp_Port; 
-                int FTP_PORT= 21;
+                string FTP_SERVER = Properties.Settings.Default.ftp_Address;
+               // string FTP_SERVER = "127.0.0.1";
+                int FTP_PORT = Properties.Settings.Default.ftp_Port; 
+                //int FTP_PORT= 21;
                 string FTP_USER = Properties.Settings.Default.ftp_User;
                 string FTP_PASSWORD = Properties.Settings.Default.ftp_Pass;
 
@@ -368,11 +390,12 @@ string oldBut = button1.Text;
                     Invoke(new Action<bool>(s => button1.Enabled = s), true);
                     Invoke(new Action<bool>(s => button2.Enabled = s), true);
                     Invoke(new Action<bool>(s => listBox1.Enabled = s), true);
-                    Thread.CurrentThread.Abort();
+                    mutexObj.ReleaseMutex();
+                    return;
                 }
                 client.Connect(TimeoutFTP, FTP_SERVER, FTP_PORT);
                 client.Login(TimeoutFTP, FTP_USER, FTP_PASSWORD);
-
+                #endregion
                 //Меняет директорию на указанную.
                 //Можно переходить вверх указав вместо имени папки ".." либо в любую папку расположенную в текущей.
                 client.ChangeDirectory(TimeoutFTP, PM_path_server);//переход в директорию DOM100
@@ -383,10 +406,11 @@ string oldBut = button1.Text;
                 {
                     //    MessageBox.Show("В каталоге " + PM_path_server+" ничего нет", "GetDirectoryList");
                     Invoke(new Action<string>(s => button1.Text = s), oldBut);
-                    Invoke(new Action<bool>(s => button1.Enabled = s), true);
+                    //Invoke(new Action<bool>(s => button1.Enabled = s), true);
                     Invoke(new Action<bool>(s => button2.Enabled = s), true);
                     Invoke(new Action<bool>(s => listBox1.Enabled = s), true);
-                    Thread.CurrentThread.Abort();
+                    mutexObj.ReleaseMutex();
+                    return;
                 }
                 ReadPM pm24;
                 NE NEstat;
@@ -416,8 +440,8 @@ string oldBut = button1.Text;
                         //copy Directories from server
                         if (!Directory.Exists(DirLocal)) Directory.CreateDirectory(DirLocal);
                         //пропуск существующих кроме последней
-                        // if (localdirs.Contains(DirDate.ToString("yyyyMMdd")) && localdirs.Last()!=DirDate.ToString("yyyyMMdd")) continue;
-                        var dirInfo = Directory.CreateDirectory(DirLocal + "/"+currentDOM+"/" + ftpItem.Name);//date dir
+                        string LocalDirdate = DirLocal + "/" + currentDOM + "/" + ftpItem.Name;
+                        var dirInfo = Directory.CreateDirectory(LocalDirdate);//date dir
 
                         client.ChangeDirectory(TimeoutFTP, ftpItem.Name);//переход в директорию DirDate
 
@@ -425,7 +449,7 @@ string oldBut = button1.Text;
                         string dir24pm = ""; //имя промежуточной папки
                         string dir15pm = "";
                         var listDir = client.GetDirectoryList(TimeoutFTP);
-
+                //теперь в папке с датой, видим одну или две папки (pm15 or pm24)
                         foreach (var dir in listDir)
                         {
                             if (dir.Name ==pm24Dir)
@@ -451,24 +475,26 @@ string oldBut = button1.Text;
                             dirInfo.Name + "/" +                  //dateDir
                             pm24Dir + "/";
                         //read files pm24
-                        if (!String.IsNullOrWhiteSpace(dir24pm))
+                        if (!String.IsNullOrWhiteSpace(dir24pm))//Если есть папка pm24
                         {
                             client.ChangeDirectory(TimeoutFTP, dir24pm);//зашли в папку ~PM24dir ~
                             Files = client.GetDirectoryList(TimeoutFTP); //список файлов статистики
+                            consts.invokeControlText(label4, "Server: " + DestDir24);
                             foreach (var file in Files)
                             {//заносим инфу из каждого файла в структуру BASE
+                                string FullDestFilePath = DestDir24 + file.Name;
+                                Invoke(new Action<int>(s => nFiles += s), 1);
                                 #region look local files
                                 // skip existing local files
-                               if (ExistLocalFile(currentDOM, ftpItem.Name, pm24Dir, file.Name))
+                                if (File.Exists(FullDestFilePath))
                                 {
                                    BASE.AddNE(new ReadPM(DestDir24, file.Name));
                                     continue;
                                 }
                                 #endregion
                                 if (file.Size == -1) continue;
-                                Invoke(new Action<int>(s => nFiles += s), 1);
                                 //copy file from server to local Dir
-                                client.GetFile(TimeoutFTP, DestDir24 + file.Name, file.Name);
+                                client.GetFile(TimeoutFTP, FullDestFilePath, file.Name);
                                 pm24 = new ReadPM(DestDir24, file.Name);//считали и проанализировали локальный файл
                                 BASE.AddNE(pm24);//add to base
 								c_pm24++;
@@ -481,22 +507,24 @@ string oldBut = button1.Text;
                         {
                            client.ChangeDirectory(TimeoutFTP, dir15pm);//зашли в папку ~PM15dir ~
                                 Files = client.GetDirectoryList(TimeoutFTP); //список файлов статистики
+                            consts.invokeControlText(label4, "Server: " + DestDir15);
                                 foreach (var file in Files)
                                 {//заносим инфу из каждого файла в структуру BASE
-                                    #region look local files
-                                    // skip existing local files
-                                    if (ExistLocalFile(currentDOM, ftpItem.Name, dir15pm, file.Name))
+                                string FullDestFilePath = DestDir15 + file.Name;
+                                Invoke(new Action<int>(s => nFiles += s), 1);
+                                #region look local files
+                                // skip existing local files
+                                if (File.Exists(FullDestFilePath))
                                     {
-                                        BASE.AddNE(new PM15(DestDir15 + file.Name));
+                                        BASE.AddNE(new PM15(FullDestFilePath));
                                         continue;
                                     }
 
                                     #endregion
                                     if (file.Size == -1) continue;
-                                    Invoke(new Action<int>(s => nFiles += s), 1);
-                                    //copy file from server to local Dir
-                                    client.GetFile(TimeoutFTP, DestDir15 + file.Name, file.Name);
-                                    var pm15 = new PM15(DestDir15 + file.Name);//считали и проанализировали локальный файл
+                                   //copy file from server to local Dir
+                                    client.GetFile(TimeoutFTP, FullDestFilePath, file.Name);
+                                    var pm15 = new PM15(FullDestFilePath);//считали и проанализировали локальный файл
                                     BASE.AddNE(pm15);//add to base
 									c_pm15++;
                                 }
@@ -504,19 +532,18 @@ string oldBut = button1.Text;
 
                             
                            // client.ChangeDirectoryUp(TimeoutFTP);//in dom100
-                            text = "Обработано файлов: " + nFiles+
-                            	"; Скопировано с сервера="+c_pm24.ToString()+"pm24 и ="+c_pm15+
-                            	"pm15. Всего ="+(c_pm24+c_pm15).ToString();
-                            Invoke(new Action<string>(s => label4.Text = s), text);
-
                         }//if (pm15dir exist)
                         client.ChangeDirectoryUp(TimeoutFTP);//up from dirdate
                     } //Filter DATE
                 } //foreach DirDates
-                    //Отключаемся от ФТП сервера
-                    client.Disconnect(TimeoutFTP);
+                text = "Обработано файлов: " + nFiles +
+                                "; Скопировано с сервера = " + c_pm24.ToString() + "(pm24) и = " + c_pm15 +
+                                "(pm15). Всего =" + (c_pm24 + c_pm15).ToString();
+                consts.invokeControlText(label4, text);
+                //Отключаемся от ФТП сервера
+                client.Disconnect(TimeoutFTP);
                     Invoke(new Action<string>(s => button1.Text = s), oldBut);
-                    Invoke(new Action<bool>(s => button1.Enabled = s), true);
+                   // Invoke(new Action<bool>(s => button1.Enabled = s), true);
                     Invoke(new Action<bool>(s => button2.Enabled = s), true);
                     Invoke(new Action<bool>(s => listBox1.Enabled = s), true);
                 mutexObj.ReleaseMutex();
@@ -648,8 +675,6 @@ needRefrash=true;
         		int nNE = B.FindIndex(n => n.NE_Name == listBox1.SelectedItem.ToString());
         		if (nNE != -1)
         		{
-                       
-
                     //select first port with errors
                     var ports_with_errors = B[nNE].Ports.Where(x => x.HaveError());
                     if (ports_with_errors.Count() == 0) return;
@@ -663,18 +688,7 @@ needRefrash=true;
                     int ind_port_list = cb_ports.Items.IndexOf(port.PortName);
                     cb_ports.SelectedItem = cb_ports.Items[ind_port_list];
                     DrawPortToChart(port, pm24, true);
-                    //if (pm24)
-                    //{
-                    //    chart1 = chart;
-                    //     comboBox1=cb_line;
-                    //     comboBox3=cb_ports ;
-                    //}
-                    //else
-                    //{
-                    //    chart2 = chart;
-                    //    comboBox2 = cb_line;
-                    //    comboBox4 = cb_ports;
-                    //}
+                    
                 }
 
                 for (int i = 0; i <cb_line.Items.Count; i++)
@@ -723,9 +737,10 @@ needRefrash=true;
                     #endregion
                     List<int> bbeList = new List<int>();
                     List<DateTime> dates = new List<DateTime>();
-                if(port.Stat_Have_BBE())
+                if(port.Stat_Have_BBE()) //Добавление данных для графика
                     foreach (var stat in port.Stat)
                     { 
+                        if (!pm24 && !stat.HaveError()) continue;//пропустим пустые дни для pm15
                         bbeList.Add(stat.BBE);
                         dates.Add(stat.Date);
                         s1.Points.AddXY(stat.Date, stat.BBE);
@@ -733,6 +748,7 @@ needRefrash=true;
                 {
                     foreach (var stat in port.Stat)
                     {
+                        if (!pm24 && !stat.HaveError()) continue;//пропустим пустые дни для pm15
                         bbeList.Add(stat.FEBBE);
                         dates.Add(stat.Date);
                         s1.Points.AddXY(stat.Date, stat.FEBBE);
@@ -757,7 +773,7 @@ needRefrash=true;
         /// </summary>
         /// <param name="all">Show all items or only with errors</param>
        private void Display(bool all)
-        {        	
+        {        //TODO1 drawDataGrid in Thread	
         	bool pm24=true;
             string selectedNE = "";
             try
@@ -784,10 +800,10 @@ needRefrash=true;
                 //else MessageBox.Show("Нет данной статистики за выбранный период");
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                
-                throw;
+
+                MessageBox.Show(ex.Message);
             }
         }
        public void DrawDataGrid(int nNe,bool pm24, bool all)
@@ -843,9 +859,8 @@ needRefrash=true;
                             else 
                             {
                              dataGridView2.Rows[nrow].DefaultCellStyle.BackColor = Color.Honeydew;
-                        
                             dataGridView2.Rows[nrow].Cells["date15"].Value = st.Date.ToShortDateString()+"--"+st.Date.ToShortTimeString();
-                            dataGridView1.Rows[nrow].Cells["link15"].Value = st.FilePath;
+                            dataGridView2.Rows[nrow].Cells["link15"].Value = st.FilePath;
                             dataGridView2.Rows[nrow].Cells["BBE15"].Value = st.BBE;
                             dataGridView2.Rows[nrow].Cells["ES15"].Value = st.ES;
                             dataGridView2.Rows[nrow].Cells["SES15"].Value = st.SES;

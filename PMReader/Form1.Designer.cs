@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title5 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title6 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.button1 = new System.Windows.Forms.Button();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
@@ -47,6 +47,17 @@
             this.contextMenuLB = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.contextmenuLoad = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.ports = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bbe = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ES = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SES = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NEUAS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FEBBE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FEES = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FESES = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FEUAS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.link = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label4 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -65,19 +76,7 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.ports = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bbe = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ES = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SES = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NEUAS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FEBBE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FEES = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FESES = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FEUAS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.link = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ports15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.link15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.date15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BBE15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ES15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -87,6 +86,7 @@
             this.FEES15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FESES15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FEUAS15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.link15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuLB.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -215,269 +215,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(711, 387);
             this.dataGridView1.TabIndex = 5;
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(175, 67);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(38, 18);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "------";
-            // 
-            // button2
-            // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(369, 34);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(370, 26);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "Считать локальную папку";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(15, 28);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(275, 23);
-            this.checkBox1.TabIndex = 9;
-            this.checkBox1.Text = "Не показывать пустые порты";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.CheckBox1CheckedChanged);
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Controls.Add(this.tabPage4);
-            this.tabControl1.Location = new System.Drawing.Point(178, 85);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(725, 419);
-            this.tabControl1.TabIndex = 10;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.dataGridView1);
-            this.tabPage1.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(717, 393);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "ТаблицаPM24";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.comboBox3);
-            this.tabPage2.Controls.Add(this.comboBox1);
-            this.tabPage2.Controls.Add(this.chart1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(717, 393);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "ГрафикPM24";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // comboBox3
-            // 
-            this.comboBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(152, 20);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(293, 21);
-            this.comboBox3.TabIndex = 11;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(554, 20);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 11;
-            // 
-            // chart1
-            // 
-            this.chart1.AntiAliasing = System.Windows.Forms.DataVisualization.Charting.AntiAliasingStyles.Text;
-            this.chart1.BackColor = System.Drawing.SystemColors.Control;
-            this.chart1.BorderSkin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.chart1.BorderSkin.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.TopBottom;
-            this.chart1.BorderSkin.BackSecondaryColor = System.Drawing.Color.Blue;
-            this.chart1.BorderSkin.PageColor = System.Drawing.SystemColors.Control;
-            this.chart1.BorderSkin.SkinStyle = System.Windows.Forms.DataVisualization.Charting.BorderSkinStyle.FrameThin5;
-            chartArea5.AxisX.ScaleBreakStyle.Enabled = true;
-            chartArea5.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea5);
-            this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend5.Alignment = System.Drawing.StringAlignment.Center;
-            legend5.Name = "Legend1";
-            this.chart1.Legends.Add(legend5);
-            this.chart1.Location = new System.Drawing.Point(3, 3);
-            this.chart1.Margin = new System.Windows.Forms.Padding(0);
-            this.chart1.Name = "chart1";
-            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series5.Color = System.Drawing.Color.Red;
-            series5.CustomProperties = "EmptyPointValue=Zero";
-            series5.Legend = "Legend1";
-            series5.LegendText = "BBE";
-            series5.Name = "Series1";
-            series5.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Date;
-            series5.YValuesPerPoint = 2;
-            series5.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            this.chart1.Series.Add(series5);
-            this.chart1.Size = new System.Drawing.Size(711, 387);
-            this.chart1.TabIndex = 0;
-            this.chart1.Text = "BBE";
-            this.chart1.TextAntiAliasingQuality = System.Windows.Forms.DataVisualization.Charting.TextAntiAliasingQuality.SystemDefault;
-            title5.Alignment = System.Drawing.ContentAlignment.TopCenter;
-            title5.BackColor = System.Drawing.SystemColors.Control;
-            title5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            title5.Name = "Title1";
-            title5.Text = "График появления ошибок за выбранный период";
-            title5.ToolTip = "Период, за который отображены данные";
-            this.chart1.Titles.Add(title5);
-            this.chart1.Click += new System.EventHandler(this.Chart1Click);
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.Controls.Add(this.dataGridView2);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(717, 393);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "ТаблицаPM15";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // dataGridView2
-            // 
-            this.dataGridView2.AllowUserToAddRows = false;
-            this.dataGridView2.AllowUserToDeleteRows = false;
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ports15,
-            this.link15,
-            this.date15,
-            this.BBE15,
-            this.ES15,
-            this.SES15,
-            this.NEUAS15,
-            this.FEBBE15,
-            this.FEES15,
-            this.FESES15,
-            this.FEUAS15});
-            this.dataGridView2.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView2.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.ReadOnly = true;
-            this.dataGridView2.RowHeadersVisible = false;
-            this.dataGridView2.Size = new System.Drawing.Size(717, 393);
-            this.dataGridView2.TabIndex = 6;
-            // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.comboBox4);
-            this.tabPage4.Controls.Add(this.comboBox2);
-            this.tabPage4.Controls.Add(this.chart2);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(717, 393);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "ГрафикPM15";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // comboBox4
-            // 
-            this.comboBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(152, 17);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(297, 21);
-            this.comboBox4.TabIndex = 13;
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(554, 17);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 21);
-            this.comboBox2.TabIndex = 12;
-            // 
-            // chart2
-            // 
-            this.chart2.AntiAliasing = System.Windows.Forms.DataVisualization.Charting.AntiAliasingStyles.Text;
-            this.chart2.BackColor = System.Drawing.SystemColors.Control;
-            this.chart2.BorderSkin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.chart2.BorderSkin.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.TopBottom;
-            this.chart2.BorderSkin.BackSecondaryColor = System.Drawing.Color.Blue;
-            this.chart2.BorderSkin.PageColor = System.Drawing.SystemColors.Control;
-            this.chart2.BorderSkin.SkinStyle = System.Windows.Forms.DataVisualization.Charting.BorderSkinStyle.FrameThin5;
-            chartArea6.AxisX.LabelAutoFitMinFontSize = 5;
-            chartArea6.AxisX.ScaleBreakStyle.BreakLineStyle = System.Windows.Forms.DataVisualization.Charting.BreakLineStyle.Wave;
-            chartArea6.AxisX.ScaleBreakStyle.Enabled = true;
-            chartArea6.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea6);
-            this.chart2.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend6.Name = "Legend1";
-            this.chart2.Legends.Add(legend6);
-            this.chart2.Location = new System.Drawing.Point(0, 0);
-            this.chart2.Margin = new System.Windows.Forms.Padding(0);
-            this.chart2.Name = "chart2";
-            this.chart2.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
-            series6.ChartArea = "ChartArea1";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.SplineArea;
-            series6.Color = System.Drawing.Color.Red;
-            series6.CustomProperties = "EmptyPointValue=Zero";
-            series6.Legend = "Legend1";
-            series6.LegendText = "BBE";
-            series6.Name = "Series1";
-            series6.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Date;
-            series6.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            this.chart2.Series.Add(series6);
-            this.chart2.Size = new System.Drawing.Size(717, 393);
-            this.chart2.TabIndex = 1;
-            this.chart2.Text = "BBE";
-            this.chart2.TextAntiAliasingQuality = System.Windows.Forms.DataVisualization.Charting.TextAntiAliasingQuality.SystemDefault;
-            title6.Alignment = System.Drawing.ContentAlignment.TopCenter;
-            title6.BackColor = System.Drawing.SystemColors.Control;
-            title6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            title6.Name = "Title1";
-            title6.Text = "График появления ошибок за выбранный период";
-            title6.ToolTip = "Период, за который отображены данные";
-            this.chart2.Titles.Add(title6);
-            // 
-            // timer1
-            // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 400;
-            this.timer1.Tick += new System.EventHandler(this.Timer1Tick);
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.Checked = true;
-            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Location = new System.Drawing.Point(15, 46);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(301, 23);
-            this.checkBox2.TabIndex = 9;
-            this.checkBox2.Text = "Не показывать пустые pm15-интервалы ";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            this.checkBox2.CheckedChanged += new System.EventHandler(this.CheckBox1CheckedChanged);
-            // 
             // ports
             // 
             this.ports.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -576,6 +313,268 @@
             this.link.ReadOnly = true;
             this.link.Visible = false;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label4.Location = new System.Drawing.Point(175, 67);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(38, 18);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "------";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(369, 34);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(370, 26);
+            this.button2.TabIndex = 7;
+            this.button2.Text = "Считать локальную папку";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Location = new System.Drawing.Point(15, 28);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(275, 23);
+            this.checkBox1.TabIndex = 9;
+            this.checkBox1.Text = "Не показывать пустые порты";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.CheckBox1CheckedChanged);
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
+            this.tabControl1.Location = new System.Drawing.Point(178, 85);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(725, 419);
+            this.tabControl1.TabIndex = 10;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.dataGridView1);
+            this.tabPage1.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(717, 393);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "ТаблицаPM24";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.comboBox3);
+            this.tabPage2.Controls.Add(this.comboBox1);
+            this.tabPage2.Controls.Add(this.chart1);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(717, 393);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "ГрафикPM24";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // comboBox3
+            // 
+            this.comboBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Location = new System.Drawing.Point(152, 20);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(293, 21);
+            this.comboBox3.TabIndex = 11;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(554, 20);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 11;
+            // 
+            // chart1
+            // 
+            this.chart1.AntiAliasing = System.Windows.Forms.DataVisualization.Charting.AntiAliasingStyles.Text;
+            this.chart1.BackColor = System.Drawing.SystemColors.Control;
+            this.chart1.BorderSkin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.chart1.BorderSkin.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.TopBottom;
+            this.chart1.BorderSkin.BackSecondaryColor = System.Drawing.Color.Blue;
+            this.chart1.BorderSkin.PageColor = System.Drawing.SystemColors.Control;
+            this.chart1.BorderSkin.SkinStyle = System.Windows.Forms.DataVisualization.Charting.BorderSkinStyle.FrameThin5;
+            chartArea1.AxisX.ScaleBreakStyle.Enabled = true;
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
+            legend1.Alignment = System.Drawing.StringAlignment.Center;
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
+            this.chart1.Location = new System.Drawing.Point(3, 3);
+            this.chart1.Margin = new System.Windows.Forms.Padding(0);
+            this.chart1.Name = "chart1";
+            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Color = System.Drawing.Color.Red;
+            series1.CustomProperties = "EmptyPointValue=Zero";
+            series1.Legend = "Legend1";
+            series1.LegendText = "BBE";
+            series1.Name = "Series1";
+            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Date;
+            series1.YValuesPerPoint = 2;
+            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            this.chart1.Series.Add(series1);
+            this.chart1.Size = new System.Drawing.Size(711, 387);
+            this.chart1.TabIndex = 0;
+            this.chart1.Text = "BBE";
+            this.chart1.TextAntiAliasingQuality = System.Windows.Forms.DataVisualization.Charting.TextAntiAliasingQuality.SystemDefault;
+            title1.Alignment = System.Drawing.ContentAlignment.TopCenter;
+            title1.BackColor = System.Drawing.SystemColors.Control;
+            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            title1.Name = "Title1";
+            title1.Text = "График появления ошибок за выбранный период";
+            title1.ToolTip = "Период, за который отображены данные";
+            this.chart1.Titles.Add(title1);
+            this.chart1.Click += new System.EventHandler(this.Chart1Click);
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.dataGridView2);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(717, 393);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "ТаблицаPM15";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView2
+            // 
+            this.dataGridView2.AllowUserToAddRows = false;
+            this.dataGridView2.AllowUserToDeleteRows = false;
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ports15,
+            this.date15,
+            this.BBE15,
+            this.ES15,
+            this.SES15,
+            this.NEUAS15,
+            this.FEBBE15,
+            this.FEES15,
+            this.FESES15,
+            this.FEUAS15,
+            this.link15});
+            this.dataGridView2.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView2.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.ReadOnly = true;
+            this.dataGridView2.RowHeadersVisible = false;
+            this.dataGridView2.Size = new System.Drawing.Size(717, 393);
+            this.dataGridView2.TabIndex = 6;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.comboBox4);
+            this.tabPage4.Controls.Add(this.comboBox2);
+            this.tabPage4.Controls.Add(this.chart2);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(717, 393);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "ГрафикPM15";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // comboBox4
+            // 
+            this.comboBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox4.FormattingEnabled = true;
+            this.comboBox4.Location = new System.Drawing.Point(152, 17);
+            this.comboBox4.Name = "comboBox4";
+            this.comboBox4.Size = new System.Drawing.Size(297, 21);
+            this.comboBox4.TabIndex = 13;
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(554, 17);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(121, 21);
+            this.comboBox2.TabIndex = 12;
+            // 
+            // chart2
+            // 
+            this.chart2.AntiAliasing = System.Windows.Forms.DataVisualization.Charting.AntiAliasingStyles.Text;
+            this.chart2.BackColor = System.Drawing.SystemColors.Control;
+            this.chart2.BorderSkin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.chart2.BorderSkin.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.TopBottom;
+            this.chart2.BorderSkin.BackSecondaryColor = System.Drawing.Color.Blue;
+            this.chart2.BorderSkin.PageColor = System.Drawing.SystemColors.Control;
+            this.chart2.BorderSkin.SkinStyle = System.Windows.Forms.DataVisualization.Charting.BorderSkinStyle.FrameThin5;
+            chartArea2.AxisX.LabelAutoFitMinFontSize = 5;
+            chartArea2.AxisX.ScaleBreakStyle.BreakLineStyle = System.Windows.Forms.DataVisualization.Charting.BreakLineStyle.Wave;
+            chartArea2.AxisX.ScaleBreakStyle.Enabled = true;
+            chartArea2.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea2);
+            this.chart2.Dock = System.Windows.Forms.DockStyle.Fill;
+            legend2.Name = "Legend1";
+            this.chart2.Legends.Add(legend2);
+            this.chart2.Location = new System.Drawing.Point(0, 0);
+            this.chart2.Margin = new System.Windows.Forms.Padding(0);
+            this.chart2.Name = "chart2";
+            this.chart2.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.SplineArea;
+            series2.Color = System.Drawing.Color.Red;
+            series2.CustomProperties = "EmptyPointValue=Zero";
+            series2.Legend = "Legend1";
+            series2.LegendText = "BBE";
+            series2.Name = "Series1";
+            series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Date;
+            series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            this.chart2.Series.Add(series2);
+            this.chart2.Size = new System.Drawing.Size(717, 393);
+            this.chart2.TabIndex = 1;
+            this.chart2.Text = "BBE";
+            this.chart2.TextAntiAliasingQuality = System.Windows.Forms.DataVisualization.Charting.TextAntiAliasingQuality.SystemDefault;
+            title2.Alignment = System.Drawing.ContentAlignment.TopCenter;
+            title2.BackColor = System.Drawing.SystemColors.Control;
+            title2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            title2.Name = "Title1";
+            title2.Text = "График появления ошибок за выбранный период";
+            title2.ToolTip = "Период, за который отображены данные";
+            this.chart2.Titles.Add(title2);
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 400;
+            this.timer1.Tick += new System.EventHandler(this.Timer1Tick);
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.Checked = true;
+            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox2.Location = new System.Drawing.Point(15, 46);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(301, 23);
+            this.checkBox2.TabIndex = 9;
+            this.checkBox2.Text = "Не показывать пустые pm15-интервалы ";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.CheckBox1CheckedChanged);
+            // 
             // ports15
             // 
             this.ports15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -584,13 +583,6 @@
             this.ports15.ReadOnly = true;
             this.ports15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ports15.Width = 46;
-            // 
-            // link15
-            // 
-            this.link15.HeaderText = "link";
-            this.link15.Name = "link15";
-            this.link15.ReadOnly = true;
-            this.link15.Visible = false;
             // 
             // date15
             // 
@@ -673,6 +665,13 @@
             this.FEUAS15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.FEUAS15.Width = 48;
             // 
+            // link15
+            // 
+            this.link15.HeaderText = "link15";
+            this.link15.Name = "link15";
+            this.link15.ReadOnly = true;
+            this.link15.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -752,7 +751,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn FEUAS;
         private System.Windows.Forms.DataGridViewTextBoxColumn link;
         private System.Windows.Forms.DataGridViewTextBoxColumn ports15;
-        private System.Windows.Forms.DataGridViewTextBoxColumn link15;
         private System.Windows.Forms.DataGridViewTextBoxColumn date15;
         private System.Windows.Forms.DataGridViewTextBoxColumn BBE15;
         private System.Windows.Forms.DataGridViewTextBoxColumn ES15;
@@ -762,6 +760,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn FEES15;
         private System.Windows.Forms.DataGridViewTextBoxColumn FESES15;
         private System.Windows.Forms.DataGridViewTextBoxColumn FEUAS15;
+        private System.Windows.Forms.DataGridViewTextBoxColumn link15;
     }
 }
 
