@@ -1,1 +1,0 @@
-csc.exe /out:..\..\Bin\BytesRoad.Diag.dll /t:library /recurse:*.cs

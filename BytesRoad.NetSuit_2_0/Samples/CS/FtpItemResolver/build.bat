@@ -1,1 +1,0 @@
-csc.exe /t:exe /out:..\Bin\FtpItemResolver.exe /r:..\Bin\BytesRoad.Diag.dll /r:..\Bin\BytesRoad.Net.Ftp.dll FtpItemResolver.cs

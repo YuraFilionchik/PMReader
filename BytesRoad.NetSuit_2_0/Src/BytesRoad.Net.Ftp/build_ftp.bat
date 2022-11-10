@@ -1,1 +1,0 @@
-csc.exe /out:..\..\Bin\BytesRoad.Net.Ftp.dll /t:library /r:..\..\Bin\BytesRoad.Diag.dll /r:..\..\Bin\BytesRoad.Net.Sockets.dll /recurse:*.cs
